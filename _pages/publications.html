@@ -6,17 +6,177 @@ author_profile: true
 ---
 
 {% if site.author.googlescholar %}
-  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
+  <div class="wordwrap">
+    You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.
+  </div>
 {% endif %}
 
 {% include base_path %}
+<style>
+  .toggle-buttons, .area-buttons {
+    margin-bottom: 1.5rem;
+  }
 
-{% assign pubs_by_year = site.publications | sort: 'date' | reverse | group_by_exp:"pub","pub.date | date: '%Y'" %}
+  .toggle-buttons button, .area-buttons button {
+    background: #3a506b;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s, transform 0.1s;
+  }
 
-{% for year_group in pubs_by_year %}
-  <h2>{{ year_group.name }}</h2>
-  <hr />
-  {% for post in year_group.items %}
-    {% include archive-single.html %}
-  {% endfor %}
-{% endfor %}
+  .toggle-buttons button:hover, .area-buttons button:hover {
+    background: #5bc0be;
+    transform: translateY(-1px);
+  }
+
+  .toggle-buttons button.active, .area-buttons button.active {
+    background: #5bc0be;
+    color: #1c2541;
+    font-weight: bold;
+  }
+
+  .year-block, .area-block {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .year-title, .area-title {
+    color: #3a506b;
+    border-bottom: 2px solid #d3d3d3;
+    padding-bottom: 0.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .pub-card {
+    background: #ffffff;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.7rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    transition: transform 0.15s ease-in-out;
+  }
+
+  .pub-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .pub-title {
+    margin: 0;
+    color: #1c2541;
+  }
+
+  .pub-title a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .pub-title a:hover {
+    color: #5bc0be;
+  }
+
+  .pub-meta {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 0.3rem;
+  }
+
+  .single-publication {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+</style>
+
+{% if page.collection == "publications" and page.title != "Publications" %}
+  <!-- Single Publication Page -->
+  <article class="single-publication">
+    <h1>{{ page.title }}</h1>
+    <p class="pub-meta">
+      Published in {{ page.venue }}, {{ page.date | date: "%Y" }}
+    </p>
+    {{ content }}
+  </article>
+{% else %}
+  <!-- Publications Listing Page -->
+  <h1>Publications</h1>
+
+  <div class="toggle-buttons">
+    <button id="btn-year" class="active" onclick="showGroup('year')">Group by Year</button>
+    <button id="btn-area" onclick="showGroup('area')">Group by Area</button>
+  </div>
+
+  <div class="area-buttons" id="area-buttons" style="display:none;"></div>
+
+  <div id="group-year">
+    {% assign pubs_by_year = site.publications | sort: 'date' | reverse | group_by_exp: "pub", "pub.date | date: '%Y'" %}
+    {% for year_group in pubs_by_year %}
+      <div class="year-block">
+        <h2 class="year-title">{{ year_group.name }}</h2>
+        {% for pub in year_group.items %}
+          <div class="pub-card">
+            <h3 class="pub-title"><a href="{{ pub.url | relative_url }}">{{ pub.title }}</a></h3>
+            <p class="pub-meta">Published in {{ pub.venue }}, {{ pub.date | date: "%Y" }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div id="group-area" style="display:none;">
+    {% assign pubs_by_area = site.publications | sort: 'date' | reverse | group_by: "area" %}
+    {% for area_group in pubs_by_area %}
+      <div class="area-block" id="area-{{ area_group.name | slugify }}">
+        <h2 class="area-title">{{ area_group.name }}</h2>
+        {% assign sorted_pubs = area_group.items | sort: 'date' | reverse %}
+        {% assign pubs_by_year_in_area = sorted_pubs | group_by_exp: "pub", "pub.date | date: '%Y'" %}
+        {% for year_group in pubs_by_year_in_area %}
+          <h3 class="year-title">{{ year_group.name }}</h3>
+          {% for pub in year_group.items %}
+            <div class="pub-card">
+              <h3 class="pub-title"><a href="{{ pub.url | relative_url }}">{{ pub.title }}</a></h3>
+              <p class="pub-meta">Published in {{ pub.venue }}, {{ pub.date | date: "%Y" }}</p>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    function showGroup(type) {
+      document.getElementById('group-year').style.display = (type === 'year') ? 'block' : 'none';
+      document.getElementById('group-area').style.display = (type === 'area') ? 'block' : 'none';
+      document.getElementById('btn-year').classList.toggle('active', type === 'year');
+      document.getElementById('btn-area').classList.toggle('active', type === 'area');
+
+      const areaButtonsDiv = document.getElementById('area-buttons');
+      if(type === 'area') {
+        areaButtonsDiv.style.display = 'block';
+        areaButtonsDiv.innerHTML = '';
+        const areaBlocks = document.querySelectorAll('.area-block');
+        areaBlocks.forEach(block => {
+          const name = block.querySelector('.area-title').innerText;
+          const btn = document.createElement('button');
+          btn.innerText = name;
+          btn.onclick = () => {
+            document.querySelectorAll('.area-buttons button').forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+            block.scrollIntoView({behavior: 'smooth', block: 'start'});
+          };
+          areaButtonsDiv.appendChild(btn);
+        });
+      } else {
+        areaButtonsDiv.style.display = 'none';
+      }
+    }
+  </script>
+{% endif %}
