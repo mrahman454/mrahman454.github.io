@@ -281,12 +281,13 @@
 
 
 <style>
+  /* Toggle and area buttons */
   .toggle-buttons, .area-buttons {
     margin-bottom: 1.5rem;
   }
 
   .toggle-buttons button, .area-buttons button {
-    background: #3a506b;
+    background: #7aa6c2;  /* soft blue */
     color: white;
     padding: 0.5rem 1rem;
     border: none;
@@ -298,18 +299,19 @@
   }
 
   .toggle-buttons button:hover, .area-buttons button:hover {
-    background: #5bc0be;
+    background: #5b8ca6;  /* slightly darker on hover */
     transform: translateY(-1px);
   }
 
   .toggle-buttons button.active, .area-buttons button.active {
-    background: #5bc0be;
+    background: #d4a373;  /* accent color */
     color: #1c2541;
     font-weight: bold;
   }
 
+  /* Year and area blocks */
   .year-block, .area-block {
-    background: #f8f9fa;
+    background: #f4f1ee;  /* muted pastel background */
     border-radius: 10px;
     padding: 1rem;
     margin-bottom: 2rem;
@@ -323,17 +325,23 @@
     margin-bottom: 1rem;
   }
 
+  /* Publication cards */
+  .pub-card:nth-child(4n+1) { background: #f4f1ee; border-left: 5px solid #a88b7f; }
+  .pub-card:nth-child(4n+2) { background: #e8f0f2; border-left: 5px solid #7aa6c2; }
+  .pub-card:nth-child(4n+3) { background: #eef4ed; border-left: 5px solid #7ca984; }
+  .pub-card:nth-child(4n+4) { background: #fef7ed; border-left: 5px solid #d4a373; }
+
   .pub-card {
-    background: #ffffff;
     padding: 0.8rem 1rem;
     margin-bottom: 0.7rem;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    transition: transform 0.15s ease-in-out;
+    transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
 
   .pub-card:hover {
     transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
   }
 
   .pub-title {
@@ -344,25 +352,29 @@
   .pub-title a {
     text-decoration: none;
     color: inherit;
+    transition: color 0.2s ease;
   }
 
   .pub-title a:hover {
-    color: #5bc0be;
+    color: #5b8ca6;
   }
 
   .pub-meta {
     font-size: 0.9rem;
-    color: #6c757d;
+    color: #495057;
     margin-top: 0.3rem;
   }
 
+  /* Single publication page */
   .single-publication {
     background: #ffffff;
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-left: 6px solid #7aa6c2;
   }
 </style>
+
 
 
   <!-- Publications Listing Page -->
