@@ -280,14 +280,15 @@
 
 
 
+
 <style>
-  /* Toggle and area buttons */
+  /* Toggle buttons and area buttons - restored design */
   .toggle-buttons, .area-buttons {
     margin-bottom: 1.5rem;
   }
 
   .toggle-buttons button, .area-buttons button {
-    background: #7aa6c2;  /* soft blue */
+    background: #3a506b;
     color: white;
     padding: 0.5rem 1rem;
     border: none;
@@ -299,19 +300,18 @@
   }
 
   .toggle-buttons button:hover, .area-buttons button:hover {
-    background: #5b8ca6;  /* slightly darker on hover */
+    background: #5bc0be;
     transform: translateY(-1px);
   }
 
   .toggle-buttons button.active, .area-buttons button.active {
-    background: #d4a373;  /* accent color */
+    background: #5bc0be;
     color: #1c2541;
     font-weight: bold;
   }
 
-  /* Year and area blocks */
+  /* Year/area blocks base styling */
   .year-block, .area-block {
-    background: #f4f1ee;  /* muted pastel background */
     border-radius: 10px;
     padding: 1rem;
     margin-bottom: 2rem;
@@ -319,34 +319,76 @@
   }
 
   .year-title, .area-title {
-    color: #3a506b;
+    color: #1c2541;
     border-bottom: 2px solid #d3d3d3;
     padding-bottom: 0.3rem;
     margin-bottom: 1rem;
   }
 
-  /* Publication cards */
-  .pub-card:nth-child(4n+1) { background: #f4f1ee; border-left: 5px solid #a88b7f; }
-  .pub-card:nth-child(4n+2) { background: #e8f0f2; border-left: 5px solid #7aa6c2; }
-  .pub-card:nth-child(4n+3) { background: #eef4ed; border-left: 5px solid #7ca984; }
-  .pub-card:nth-child(4n+4) { background: #fef7ed; border-left: 5px solid #d4a373; }
+  /* Color palette for alternating blocks */
+  :root {
+    --block-color-1: #f4f1ee;
+    --block-color-2: #e8f0f2;
+    --block-color-3: #eef4ed;
+    --block-color-4: #fef7ed;
+    --block-accent-1: #7aa6c2;
+    --block-accent-2: #d4a373;
+    --block-accent-3: #7ca984;
+    --block-accent-4: #a88b7f;
+  }
 
+  /* Alternate colors for consecutive blocks */
+  .year-block:nth-child(4n+1),
+  .area-block:nth-child(4n+1) { background: var(--block-color-1); border-left: 5px solid var(--block-accent-1); }
+
+  .year-block:nth-child(4n+2),
+  .area-block:nth-child(4n+2) { background: var(--block-color-2); border-left: 5px solid var(--block-accent-2); }
+
+  .year-block:nth-child(4n+3),
+  .area-block:nth-child(4n+3) { background: var(--block-color-3); border-left: 5px solid var(--block-accent-3); }
+
+  .year-block:nth-child(4n+4),
+  .area-block:nth-child(4n+4) { background: var(--block-color-4); border-left: 5px solid var(--block-accent-4); }
+
+    /* Publication cards with alternating soft pastel accent colors and background tints */
   .pub-card {
     padding: 0.8rem 1rem;
     margin-bottom: 0.7rem;
     border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-left: 4px solid #7aa6c2; /* default */
+    transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-color 0.2s ease;
   }
 
+  /* Rotate 4 soft pastel colors for consecutive cards */
+  .pub-card:nth-child(4n+1) { 
+    border-left-color: #7aa6c2; 
+    background-color: #eaf2f8; /* soft blue tint */
+  }
+  .pub-card:nth-child(4n+2) { 
+    border-left-color: #a8c3b0; 
+    background-color: #edf6f0; /* soft green tint */
+  }
+  .pub-card:nth-child(4n+3) { 
+    border-left-color: #c8a69d; 
+    background-color: #f9ece9; /* soft coral tint */
+  }
+  .pub-card:nth-child(4n+4) { 
+    border-left-color: #d6c5b9; 
+    background-color: #f8f4f2; /* soft beige tint */
+  }
+
+  /* Hover effect */
   .pub-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: #5bc0be;
   }
 
+  /* Titles */
   .pub-title {
     margin: 0;
-    color: #1c2541;
+    color: #1a2030; /* slightly darker */
+    font-weight: 500;
   }
 
   .pub-title a {
@@ -359,21 +401,14 @@
     color: #5b8ca6;
   }
 
+  /* Meta info */
   .pub-meta {
     font-size: 0.9rem;
-    color: #495057;
+    color: #495057; /* darker gray for better readability */
     margin-top: 0.3rem;
   }
-
-  /* Single publication page */
-  .single-publication {
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border-left: 6px solid #7aa6c2;
-  }
 </style>
+
 
 
 
