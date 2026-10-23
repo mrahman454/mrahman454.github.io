@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#181825"/>
+  <text x="100" y="104" text-anchor="middle" dominant-baseline="middle" font-family="JetBrains Mono, Menlo, Consolas, monospace" font-size="72" font-weight="700" fill="#cba6f7">MR</text>
+  <text x="100" y="160" text-anchor="middle" font-family="JetBrains Mono, Menlo, Consolas, monospace" font-size="18" fill="#a6e3a1">$ _</text>
+</svg>

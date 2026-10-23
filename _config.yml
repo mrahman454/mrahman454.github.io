@@ -22,7 +22,7 @@ repository               : "mrahman454/mrahman454.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
+  avatar           : "avatar-mr.svg" # replace with your photo, e.g. "profile.jpg" in /images/
   name             : "Mostafizar Rahman"
   pronouns         : # example: "she/her"  
   bio              : "Research Fellow, NTU Singapore. Symmetric-key cryptography: design, cryptanalysis & quantum cryptanalysis."

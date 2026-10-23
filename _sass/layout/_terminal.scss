@@ -1,0 +1,245 @@
+/* ==========================================================================
+   Terminal theme (Catppuccin Mocha palette + JetBrains Mono), site-wide.
+   Loaded last so it overrides the base theme and the academic styles.
+   ========================================================================== */
+
+$term-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+
+:root,
+html[data-theme="dark"] {
+  /* Catppuccin Mocha */
+  --ctp-crust: #11111b;
+  --ctp-mantle: #181825;
+  --ctp-base: #1e1e2e;
+  --ctp-surface0: #313244;
+  --ctp-surface1: #45475a;
+  --ctp-surface2: #585b70;
+  --ctp-overlay: #7f849c;
+  --ctp-subtext: #a6adc8;
+  --ctp-text: #cdd6f4;
+  --ctp-blue: #89b4fa;
+  --ctp-lavender: #b4befe;
+  --ctp-green: #a6e3a1;
+  --ctp-mauve: #cba6f7;
+  --ctp-peach: #fab387;
+  --ctp-red: #f38ba8;
+  --ctp-yellow: #f9e2af;
+  --ctp-teal: #94e2d5;
+  --ctp-sky: #89dceb;
+
+  /* Map the base theme onto the palette */
+  --global-base-color: var(--ctp-subtext);
+  --global-bg-color: var(--ctp-base);
+  --global-footer-bg-color: var(--ctp-mantle);
+  --global-border-color: var(--ctp-surface0);
+  --global-dark-border-color: var(--ctp-surface1);
+  --global-code-background-color: var(--ctp-mantle);
+  --global-code-text-color: var(--ctp-text);
+  --global-fig-caption-color: var(--ctp-subtext);
+  --global-link-color: var(--ctp-blue);
+  --global-link-color-hover: var(--ctp-lavender);
+  --global-link-color-visited: var(--ctp-blue);
+  --global-masthead-link-color: var(--ctp-text);
+  --global-masthead-link-color-hover: var(--ctp-blue);
+  --global-text-color: var(--ctp-text);
+  --global-text-color-light: var(--ctp-subtext);
+  --global-thead-color: var(--ctp-surface0);
+
+  /* Map the academic styles onto the palette */
+  --acad-accent: var(--ctp-mauve);
+  --acad-accent-soft: rgba(203, 166, 247, 0.1);
+  --acad-muted: var(--ctp-subtext);
+  --acad-text: var(--ctp-text);
+  --acad-rule: var(--ctp-surface0);
+}
+
+html {
+  font-size: 15px;
+  background: var(--ctp-mantle);
+}
+@media (min-width: 1280px) { html { font-size: 16px; } }
+
+body {
+  font-family: $term-mono;
+  background: var(--ctp-base);
+  color: var(--ctp-text);
+}
+::selection { background: var(--ctp-mauve); color: var(--ctp-base); }
+
+h1, h2, h3, h4, h5, h6,
+.page__title, .archive h1, .author__name, .pub-year,
+.sidebar, .sidebar p, .sidebar li, .sidebar a, .sidebar .author__name,
+.masthead__menu-item a, .masthead__menu-item--lg a,
+button, input, table, th, td {
+  font-family: $term-mono !important;
+  letter-spacing: 0;
+}
+
+/* ---------- Top bar = terminal title bar ---------- */
+.masthead {
+  background: var(--ctp-surface0);
+  border-bottom: 1px solid var(--ctp-surface2);
+}
+.greedy-nav,
+.greedy-nav .hidden-links { background: var(--ctp-surface0); }
+.greedy-nav .hidden-links a { color: var(--ctp-text); }
+.greedy-nav button { background: var(--ctp-surface1); }
+.greedy-nav .navicon,
+.greedy-nav .navicon:before,
+.greedy-nav .navicon:after { background: var(--ctp-text); }
+.masthead__menu-item a {
+  color: var(--ctp-subtext) !important;
+  font-size: 0.88em;
+  &:hover { color: var(--ctp-text) !important; }
+}
+.masthead__menu-item--lg a {
+  color: var(--ctp-text) !important;
+  font-size: 0.92em !important;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9em;
+}
+.greedy-nav .visible-links a:before { background: var(--ctp-mauve); }
+.tl-dots {
+  display: inline-flex;
+  gap: 7px;
+  i {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: block;
+    background: var(--ctp-red);
+    &:nth-child(2) { background: var(--ctp-yellow); }
+    &:nth-child(3) { background: var(--ctp-green); }
+  }
+}
+.brand { color: var(--ctp-green); }
+.brand__path { color: var(--ctp-blue); }
+
+/* ---------- Page titles look like commands ---------- */
+.page__title {
+  font-size: 1.5em !important;
+  font-weight: 700;
+  color: var(--ctp-text) !important;
+  &::before { content: "$ "; color: var(--ctp-green); }
+}
+.acad h2, .acad-section-title {
+  font-size: 1.05em;
+  color: var(--ctp-mauve);
+  border-bottom: 1px dashed var(--ctp-surface1);
+  &::before { content: "## "; color: var(--ctp-surface2); }
+}
+.acad h3 { color: var(--ctp-peach); font-size: 1em; }
+.pub-year {
+  color: var(--ctp-peach) !important;
+  font-size: 1.05em !important;
+  border-bottom: 1px dashed var(--ctp-surface1) !important;
+  &::before { content: "// "; color: var(--ctp-surface2); }
+}
+
+/* ---------- Sidebar ---------- */
+.author__avatar img {
+  border: 1px solid var(--ctp-surface1) !important;
+  background: var(--ctp-mantle);
+}
+.author__name { color: var(--ctp-text) !important; font-size: 1em !important; }
+.author__bio { color: var(--ctp-subtext) !important; }
+.author__urls {
+  background: var(--ctp-base);
+  a { color: var(--ctp-subtext) !important; }
+  a:hover { color: var(--ctp-blue) !important; }
+  i, .ai { color: var(--ctp-mauve) !important; }
+}
+.author__urls-wrapper .btn--inverse {
+  color: var(--ctp-text);
+  background: var(--ctp-surface0);
+  border-color: var(--ctp-surface1);
+}
+
+/* ---------- Publication / talk entries ---------- */
+.pub {
+  font-size: 0.88em;
+  border-bottom: none !important;
+  border-left: 2px solid transparent;
+  margin: 0 -1rem 0.4em !important;
+  padding: 0.8em 1rem !important;
+  border-radius: 0 6px 6px 0;
+  transition: background 0.2s, border-color 0.2s;
+  &:hover { background: var(--ctp-surface0); border-left-color: var(--ctp-blue); }
+}
+.pub__title { color: var(--ctp-blue) !important; font-weight: 500 !important; }
+.pub__authors { color: var(--ctp-text) !important; }
+.pub__authors strong { color: var(--ctp-green) !important; font-weight: 700; }
+.pub__venue { color: var(--ctp-subtext) !important; font-style: normal !important; }
+.pub__links a { color: var(--ctp-overlay) !important; }
+.pub__links a:hover { color: var(--ctp-blue) !important; }
+.acad-tag {
+  border-radius: 3px;
+  border-color: var(--ctp-surface2) !important;
+  color: var(--ctp-subtext) !important;
+  background: transparent !important;
+}
+.acad-tag--venue {
+  border-color: var(--ctp-mauve) !important;
+  color: var(--ctp-mauve) !important;
+}
+.acad-tag--award {
+  border-color: var(--ctp-yellow) !important;
+  color: var(--ctp-yellow) !important;
+}
+.pub-filters button {
+  font-family: $term-mono;
+  color: var(--ctp-subtext);
+  border-color: var(--ctp-surface1);
+  border-radius: 4px;
+  &::before { content: "--"; color: var(--ctp-surface2); }
+}
+.pub-filters button.is-active,
+.pub-filters button:hover {
+  background: var(--ctp-surface0);
+  border-color: var(--ctp-green);
+  color: var(--ctp-green);
+}
+
+/* ---------- CV entries, tables, misc ---------- */
+.cv-entry__role { color: var(--ctp-blue); font-weight: 500; }
+.cv-entry__org { color: var(--ctp-subtext) !important; font-style: normal !important; }
+.cv-entry__date { color: var(--ctp-peach) !important; }
+.acad-table { border-color: var(--ctp-surface1); }
+.acad-table th { background: var(--ctp-surface0) !important; color: var(--ctp-mauve) !important; }
+.acad-table td { border-color: var(--ctp-surface0); }
+.btn--primary {
+  font-family: $term-mono;
+  background: var(--ctp-surface0);
+  color: var(--ctp-green);
+  border: 1px solid var(--ctp-green);
+}
+strong { color: inherit; }
+hr { border-color: var(--ctp-surface0); }
+
+.page__footer {
+  background: var(--ctp-mantle);
+  color: var(--ctp-overlay);
+  border-top: 1px solid var(--ctp-surface0);
+  a { color: var(--ctp-subtext); }
+}
+
+/* Blinking cursor used across the site */
+.blink {
+  color: var(--ctp-green);
+  animation: term-blink 1s step-end infinite;
+}
+@keyframes term-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .blink { animation: none; } }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--ctp-base); }
+::-webkit-scrollbar-thumb { background: var(--ctp-surface2); border-radius: 4px; }
+
+/* Let the title-bar colour show through the menu */
+.masthead .greedy-nav,
+.masthead .greedy-nav .visible-links,
+.masthead .masthead__menu-item { background: transparent !important; }
+.masthead .greedy-nav a { margin: 0 0.8rem; }
+.masthead .greedy-nav .hidden-links { background: var(--ctp-surface0) !important; border-color: var(--ctp-surface2); }
