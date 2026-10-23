@@ -126,3 +126,103 @@
     items.forEach(function (el) { io.observe(el); });
   }
 })();
+
+/* ---------- The cipher window runs away from the cursor ---------- */
+(function () {
+  var win = document.querySelector('.t-win');
+  if (!win) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var status = document.getElementById('cipher-status');
+  var TAUNTS = ['access denied', 'nice try 😉', 'key not found', 'too slow!', 'brute force? no.', 'can’t catch me'];
+  var NEAR = 70;          /* px: how close the cursor may get before it dodges */
+  var MAX = 260;          /* px: furthest it may wander from its home */
+  var MARGIN = 12;        /* px: keep this far from the window edges */
+  var ox = 0, oy = 0, homeTimer = null, tauntTimer = null, lastMove = 0;
+
+  win.style.transition = 'transform 0.35s cubic-bezier(.2,.9,.3,1.2)';
+  win.style.willChange = 'transform';
+  win.style.position = 'relative';
+  win.style.zIndex = '2';
+
+  function apply() { win.style.transform = 'translate(' + ox + 'px,' + oy + 'px)'; }
+
+  function taunt() {
+    if (!status) return;
+    status.textContent = TAUNTS[Math.random() * TAUNTS.length | 0];
+    status.classList.remove('ok');
+    status.style.color = '#f38ba8';
+    clearTimeout(tauntTimer);
+    tauntTimer = setTimeout(function () {
+      status.style.color = '';
+      status.textContent = 'encrypting…';
+    }, 1600);
+  }
+
+  function goHomeLater() {
+    clearTimeout(homeTimer);
+    homeTimer = setTimeout(function () { ox = 0; oy = 0; apply(); }, 2200);
+  }
+
+  /* Box position if it sat at offset (nx, ny) */
+  function rectAt(nx, ny) {
+    var r = win.getBoundingClientRect();
+    /* subtract the offset it actually has right now (it may be mid-slide) */
+    var cx = 0, cy = 0, t = getComputedStyle(win).transform;
+    if (t && t !== 'none' && window.DOMMatrixReadOnly) {
+      var m = new DOMMatrixReadOnly(t); cx = m.m41; cy = m.m42;
+    }
+    var bx = r.left - cx, by = r.top - cy;
+    return { left: bx + nx, top: by + ny, right: bx + nx + r.width, bottom: by + ny + r.height };
+  }
+  function fits(r) {
+    return r.left >= MARGIN && r.top >= MARGIN + 50 &&
+           r.right <= window.innerWidth - MARGIN && r.bottom <= window.innerHeight - MARGIN;
+  }
+  function distTo(r, x, y) {
+    var dx = Math.max(r.left - x, 0, x - r.right);
+    var dy = Math.max(r.top - y, 0, y - r.bottom);
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function dodge(x, y) {
+    var best = null, bestD = -1;
+    /* try a ring of directions and distances, keep the one farthest from the cursor */
+    for (var a = 0; a < 16; a++) {
+      var ang = a / 16 * Math.PI * 2;
+      for (var s = 140; s <= 260; s += 60) {
+        var nx = ox + Math.cos(ang) * s, ny = oy + Math.sin(ang) * s;
+        if (Math.abs(nx) > MAX || Math.abs(ny) > MAX) continue;
+        var r = rectAt(nx, ny);
+        if (!fits(r)) continue;
+        var d = distTo(r, x, y);
+        if (d > bestD) { bestD = d; best = [nx, ny]; }
+      }
+    }
+    if (!best) best = [0, 0];
+    ox = Math.round(best[0]); oy = Math.round(best[1]);
+    apply();
+    taunt();
+    goHomeLater();
+  }
+
+  document.addEventListener('mousemove', function (e) {
+    var now = Date.now();
+    if (now - lastMove < 120) return;   /* let the previous hop finish */
+    var r = win.getBoundingClientRect();
+    if (distTo(r, e.clientX, e.clientY) < NEAR) { lastMove = now; dodge(e.clientX, e.clientY); }
+  });
+
+  /* Phones: a tap makes it hop sideways */
+  win.addEventListener('touchstart', function () {
+    var w = win.getBoundingClientRect().width;
+    var room = Math.max(40, Math.min(90, (window.innerWidth - w) / 2 + 60));
+    ox = ox > 0 ? -room : room;
+    oy = 0;
+    apply();
+    taunt();
+    goHomeLater();
+  }, { passive: true });
+
+  window.addEventListener('resize', function () { ox = 0; oy = 0; apply(); });
+})();
