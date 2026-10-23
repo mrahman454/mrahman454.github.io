@@ -1,0 +1,175 @@
+/* ==========================================================================
+   Academic content styles (home, publications, talks, teaching, CV)
+   Uses the theme's CSS variables so light and dark mode both work.
+   ========================================================================== */
+
+:root {
+  --acad-accent: #8b2e5f;
+  --acad-accent-soft: rgba(139, 46, 95, 0.08);
+  --acad-muted: #5f666d;
+}
+html[data-theme="dark"] {
+  --acad-accent: #e48bb8;
+  --acad-accent-soft: rgba(228, 139, 184, 0.12);
+  --acad-muted: #a9b0b7;
+}
+
+.acad-lead {
+  font-size: 1.05em;
+  line-height: 1.7;
+}
+
+.acad h2,
+.acad-section-title {
+  font-size: 1.25em;
+  margin: 2em 0 0.8em;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid var(--acad-accent);
+  color: var(--global-text-color);
+}
+
+/* Small pill labels */
+.acad-tag {
+  display: inline-block;
+  font-size: 0.68em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.12em 0.55em;
+  margin-right: 0.35em;
+  border-radius: 3px;
+  border: 1px solid var(--global-dark-border-color);
+  color: var(--acad-muted);
+  vertical-align: 0.12em;
+  white-space: nowrap;
+}
+.acad-tag--venue {
+  border-color: var(--acad-accent);
+  color: var(--acad-accent);
+  background: var(--acad-accent-soft);
+}
+.acad-tag--award {
+  border-color: #b8860b;
+  color: #b8860b;
+}
+
+/* Publication / talk list */
+.pub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pub {
+  margin: 0 0 1.1em;
+  padding: 0 0 1.1em;
+  border-bottom: 1px solid var(--global-border-color);
+  font-size: 0.92em;
+  line-height: 1.55;
+}
+.pub:last-child { border-bottom: none; }
+.pub__title {
+  display: block;
+  font-weight: 600;
+  color: var(--global-text-color);
+  margin: 0.25em 0 0.15em;
+}
+.pub__authors { color: var(--global-text-color); }
+.pub__authors strong { color: var(--acad-accent); }
+.pub__venue {
+  color: var(--acad-muted);
+  font-style: italic;
+}
+.pub__links { margin-top: 0.3em; }
+.pub__links a {
+  font-size: 0.85em;
+  margin-right: 0.9em;
+  text-decoration: none;
+}
+.pub__links a:hover { text-decoration: underline; }
+
+.pub-year {
+  font-size: 1.1em;
+  margin: 1.6em 0 0.6em;
+  color: var(--acad-accent);
+}
+
+/* Filter buttons */
+.pub-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin: 1em 0 1.5em;
+}
+.pub-filters button {
+  font: inherit;
+  font-size: 0.8em;
+  padding: 0.3em 0.8em;
+  border-radius: 999px;
+  border: 1px solid var(--global-dark-border-color);
+  background: transparent;
+  color: var(--global-text-color);
+  cursor: pointer;
+}
+.pub-filters button.is-active,
+.pub-filters button:hover {
+  border-color: var(--acad-accent);
+  background: var(--acad-accent);
+  color: #fff;
+}
+
+.pub-stats {
+  color: var(--acad-muted);
+  font-size: 0.9em;
+}
+
+/* News list on home page */
+.news {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.92em;
+}
+.news li {
+  display: flex;
+  gap: 1em;
+  padding: 0.45em 0;
+  border-bottom: 1px dashed var(--global-border-color);
+}
+.news li:last-child { border-bottom: none; }
+.news__date {
+  flex: 0 0 6.5em;
+  color: var(--acad-accent);
+  font-weight: 600;
+}
+
+/* Timeline entries (CV, experience) */
+.cv-entry {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  flex-wrap: wrap;
+  margin: 0 0 0.9em;
+  font-size: 0.95em;
+}
+.cv-entry__main { flex: 1 1 22em; }
+.cv-entry__role { font-weight: 600; }
+.cv-entry__org {
+  display: block;
+  color: var(--acad-muted);
+  font-style: italic;
+}
+.cv-entry__date {
+  color: var(--acad-muted);
+  white-space: nowrap;
+  font-size: 0.9em;
+}
+
+.acad-table {
+  font-size: 0.88em;
+  width: 100%;
+  display: table;
+}
+
+.cv-download {
+  margin: 0.5em 0 1.5em;
+}

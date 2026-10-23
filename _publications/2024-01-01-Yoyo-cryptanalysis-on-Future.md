@@ -1,10 +1,20 @@
 ---
-title: "Yoyo cryptanalysis on Future"
+title: "Yoyo Cryptanalysis on Future"
 collection: publications
 permalink: /publication/2024-01-01-Yoyo-cryptanalysis-on-Future
 date: 2024-01-01
-venue: 'International Journal of Applied Cryptography'
-area: 'Classical Cryptanalysis'
-citation: ' Sandip Mondal,  Mostafizar Rahman,  Santanu Sarkar,  Avishek Adhikari, &quot;Yoyo cryptanalysis on Future.&quot; International Journal of Applied Cryptography, 2024.'
+pubtype: journal
+area: "Classical Cryptanalysis"
+authors: "Sandip Kumar Mondal, Mostafizar Rahman, Santanu Sarkar, Avishek Adhikari"
+venue: "International Journal of Applied Cryptography"
+venue_short: "IJACT 2024"
+details: "vol. 4, pp. 238–249"
+doi: "10.1504/IJACT.2024.138453"
+citation: "Sandip Kumar Mondal, Mostafizar Rahman, Santanu Sarkar, Avishek Adhikari. Yoyo Cryptanalysis on Future. International Journal of Applied Cryptography, vol. 4, pp. 238–249, 2024."
 ---
-Use [Google Scholar](https://scholar.google.com/scholar?q=Yoyo+cryptanalysis+on+Future){:target="_blank"} for full citation
+
+**Authors:** Sandip Kumar Mondal, Mostafizar Rahman, Santanu Sarkar, Avishek Adhikari
+
+**Published in:** International Journal of Applied Cryptography, vol. 4, pp. 238–249, 2024.
+
+**DOI:** [10.1504/IJACT.2024.138453](https://doi.org/10.1504/IJACT.2024.138453)

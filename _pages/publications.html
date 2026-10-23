@@ -5,225 +5,61 @@ permalink: /publications/
 author_profile: true
 ---
 
-{% if site.author.googlescholar %}
-  <div class="wordwrap">
-    You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.
-  </div>
-{% endif %}
-
 {% include base_path %}
 
-<style>
-  /* Toggle buttons and area buttons - restored design */
-  .toggle-buttons, .area-buttons {
-    margin-bottom: 1.5rem;
-  }
+{% assign pubs = site.publications | sort: "date" | reverse %}
+{% assign journals = pubs | where: "pubtype", "journal" %}
+{% assign confs = pubs | where: "pubtype", "conference" %}
 
-  .toggle-buttons button, .area-buttons button {
-    background: #3a506b;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    margin-right: 0.5rem;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.2s, transform 0.1s;
-  }
+<div class="acad">
 
-  .toggle-buttons button:hover, .area-buttons button:hover {
-    background: #5bc0be;
-    transform: translateY(-1px);
-  }
+<p class="pub-stats">
+  {{ journals.size }} journal papers &middot; {{ confs.size }} conference papers.
+  Authors in cryptography are usually listed alphabetically.
+  {% if site.author.googlescholar %}See also my <a href="{{ site.author.googlescholar }}">Google Scholar profile</a>.{% endif %}
+</p>
 
-  .toggle-buttons button.active, .area-buttons button.active {
-    background: #5bc0be;
-    color: #1c2541;
-    font-weight: bold;
-  }
+<div class="pub-filters" role="group" aria-label="Filter publications">
+  <button type="button" class="is-active" data-filter="all">All</button>
+  <button type="button" data-filter="type:journal">Journal</button>
+  <button type="button" data-filter="type:conference">Conference</button>
+  {% assign areas = pubs | map: "area" | uniq | sort %}
+  {% for a in areas %}
+  <button type="button" data-filter="area:{{ a | slugify }}">{{ a }}</button>
+  {% endfor %}
+</div>
 
-  /* Year/area blocks base styling */
-  .year-block, .area-block {
-    border-radius: 10px;
-    padding: 1rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  }
+{% assign by_year = pubs | group_by_exp: "p", "p.date | date: '%Y'" %}
+{% for y in by_year %}
+<section class="pub-year-group">
+  <h2 class="pub-year">{{ y.name }}</h2>
+  <ul class="pub-list">
+    {% for p in y.items %}{% include pub-entry.html pub=p %}{% endfor %}
+  </ul>
+</section>
+{% endfor %}
 
-  .year-title, .area-title {
-    color: #1c2541;
-    border-bottom: 2px solid #d3d3d3;
-    padding-bottom: 0.3rem;
-    margin-bottom: 1rem;
-  }
+</div>
 
-  /* Color palette for alternating blocks */
-  :root {
-    --block-color-1: #f4f1ee;
-    --block-color-2: #e8f0f2;
-    --block-color-3: #eef4ed;
-    --block-color-4: #fef7ed;
-    --block-accent-1: #7aa6c2;
-    --block-accent-2: #d4a373;
-    --block-accent-3: #7ca984;
-    --block-accent-4: #a88b7f;
-  }
-
-  /* Alternate colors for consecutive blocks */
-  .year-block:nth-child(4n+1),
-  .area-block:nth-child(4n+1) { background: var(--block-color-1); border-left: 5px solid var(--block-accent-1); }
-
-  .year-block:nth-child(4n+2),
-  .area-block:nth-child(4n+2) { background: var(--block-color-2); border-left: 5px solid var(--block-accent-2); }
-
-  .year-block:nth-child(4n+3),
-  .area-block:nth-child(4n+3) { background: var(--block-color-3); border-left: 5px solid var(--block-accent-3); }
-
-  .year-block:nth-child(4n+4),
-  .area-block:nth-child(4n+4) { background: var(--block-color-4); border-left: 5px solid var(--block-accent-4); }
-
-    /* Publication cards with alternating soft pastel accent colors and background tints */
-  .pub-card {
-    padding: 0.8rem 1rem;
-    margin-bottom: 0.7rem;
-    border-radius: 8px;
-    border-left: 4px solid #7aa6c2; /* default */
-    transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-color 0.2s ease;
-  }
-
-  /* Rotate 4 soft pastel colors for consecutive cards */
-  .pub-card:nth-child(4n+1) { 
-    border-left-color: #7aa6c2; 
-    background-color: #eaf2f8; /* soft blue tint */
-  }
-  .pub-card:nth-child(4n+2) { 
-    border-left-color: #a8c3b0; 
-    background-color: #edf6f0; /* soft green tint */
-  }
-  .pub-card:nth-child(4n+3) { 
-    border-left-color: #c8a69d; 
-    background-color: #f9ece9; /* soft coral tint */
-  }
-  .pub-card:nth-child(4n+4) { 
-    border-left-color: #d6c5b9; 
-    background-color: #f8f4f2; /* soft beige tint */
-  }
-
-  /* Hover effect */
-  .pub-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-color: #5bc0be;
-  }
-
-  /* Titles */
-  .pub-title {
-    margin: 0;
-    color: #1a2030; /* slightly darker */
-    font-weight: 500;
-  }
-
-  .pub-title a {
-    text-decoration: none;
-    color: inherit;
-    transition: color 0.2s ease;
-  }
-
-  .pub-title a:hover {
-    color: #5b8ca6;
-  }
-
-  /* Meta info */
-  .pub-meta {
-    font-size: 0.9rem;
-    color: #495057; /* darker gray for better readability */
-    margin-top: 0.3rem;
-  }
-</style>
-
-
-
-{% if page.collection == "publications" and page.title != "Publications" %}
-  <!-- Single Publication Page -->
-  <article class="single-publication">
-    <h1>{{ page.title }}</h1>
-    <p class="pub-meta">
-      Published in {{ page.venue }}, {{ page.date | date: "%Y" }}
-    </p>
-    {{ content }}
-  </article>
-{% else %}
-  <!-- Publications Listing Page -->
-  <h1>Publications</h1>
-
-  <div class="toggle-buttons">
-    <button id="btn-year" class="active" onclick="showGroup('year')">Group by Year</button>
-    <button id="btn-area" onclick="showGroup('area')">Group by Area</button>
-  </div>
-
-  <div class="area-buttons" id="area-buttons" style="display:none;"></div>
-
-  <div id="group-year">
-    {% assign pubs_by_year = site.publications | sort: 'date' | reverse | group_by_exp: "pub", "pub.date | date: '%Y'" %}
-    {% for year_group in pubs_by_year %}
-      <div class="year-block">
-        <h2 class="year-title">{{ year_group.name }}</h2>
-        {% for pub in year_group.items %}
-          <div class="pub-card">
-            <h3 class="pub-title"><a href="{{ pub.url | relative_url }}">{{ pub.title }}</a></h3>
-            <p class="pub-meta">Published in {{ pub.venue }}, {{ pub.date | date: "%Y" }}</p>
-          </div>
-        {% endfor %}
-      </div>
-    {% endfor %}
-  </div>
-
-  <div id="group-area" style="display:none;">
-    {% assign pubs_by_area = site.publications | sort: 'date' | reverse | group_by: "area" %}
-    {% for area_group in pubs_by_area %}
-      <div class="area-block" id="area-{{ area_group.name | slugify }}">
-        <h2 class="area-title">{{ area_group.name }}</h2>
-        {% assign sorted_pubs = area_group.items | sort: 'date' | reverse %}
-        {% assign pubs_by_year_in_area = sorted_pubs | group_by_exp: "pub", "pub.date | date: '%Y'" %}
-        {% for year_group in pubs_by_year_in_area %}
-          <h3 class="year-title">{{ year_group.name }}</h3>
-          {% for pub in year_group.items %}
-            <div class="pub-card">
-              <h3 class="pub-title"><a href="{{ pub.url | relative_url }}">{{ pub.title }}</a></h3>
-              <p class="pub-meta">Published in {{ pub.venue }}, {{ pub.date | date: "%Y" }}</p>
-            </div>
-          {% endfor %}
-        {% endfor %}
-      </div>
-    {% endfor %}
-  </div>
-
-  <script>
-    function showGroup(type) {
-      document.getElementById('group-year').style.display = (type === 'year') ? 'block' : 'none';
-      document.getElementById('group-area').style.display = (type === 'area') ? 'block' : 'none';
-      document.getElementById('btn-year').classList.toggle('active', type === 'year');
-      document.getElementById('btn-area').classList.toggle('active', type === 'area');
-
-      const areaButtonsDiv = document.getElementById('area-buttons');
-      if(type === 'area') {
-        areaButtonsDiv.style.display = 'block';
-        areaButtonsDiv.innerHTML = '';
-        const areaBlocks = document.querySelectorAll('.area-block');
-        areaBlocks.forEach(block => {
-          const name = block.querySelector('.area-title').innerText;
-          const btn = document.createElement('button');
-          btn.innerText = name;
-          btn.onclick = () => {
-            document.querySelectorAll('.area-buttons button').forEach(b=>b.classList.remove('active'));
-            btn.classList.add('active');
-            block.scrollIntoView({behavior: 'smooth', block: 'start'});
-          };
-          areaButtonsDiv.appendChild(btn);
-        });
-      } else {
-        areaButtonsDiv.style.display = 'none';
-      }
-    }
-  </script>
-{% endif %}
+<script>
+(function () {
+  var buttons = document.querySelectorAll('.pub-filters button');
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      buttons.forEach(function (b) { b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      var f = btn.getAttribute('data-filter');
+      document.querySelectorAll('.pub').forEach(function (el) {
+        var show = f === 'all' ||
+          (f.indexOf('type:') === 0 && el.dataset.type === f.slice(5)) ||
+          (f.indexOf('area:') === 0 && el.dataset.area === f.slice(5));
+        el.style.display = show ? '' : 'none';
+      });
+      document.querySelectorAll('.pub-year-group').forEach(function (g) {
+        var any = Array.prototype.some.call(g.querySelectorAll('.pub'), function (el) { return el.style.display !== 'none'; });
+        g.style.display = any ? '' : 'none';
+      });
+    });
+  });
+})();
+</script>

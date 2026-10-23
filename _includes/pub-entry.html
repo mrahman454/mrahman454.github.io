@@ -1,0 +1,16 @@
+{% assign p = include.pub %}
+<li class="pub" data-type="{{ p.pubtype }}" data-area="{{ p.area | slugify }}">
+  <span class="acad-tag acad-tag--venue">{{ p.venue_short }}</span>
+  {% if p.pubtype == "journal" %}<span class="acad-tag">Journal</span>{% elsif p.pubtype == "conference" %}<span class="acad-tag">Conference</span>{% elsif p.pubtype == "preprint" %}<span class="acad-tag">Preprint</span>{% endif %}
+  {% if p.award %}<span class="acad-tag acad-tag--award">&#9733; Award</span>{% endif %}
+  <span class="pub__title">{{ p.title }}</span>
+  <span class="pub__authors">{{ p.authors | replace: "Mostafizar Rahman", "<strong>Mostafizar Rahman</strong>" }}</span><br>
+  <span class="pub__venue">{{ p.venue }}{% if p.details %}, {{ p.details }}{% endif %}, {{ p.date | date: "%Y" }}.</span>
+  {% if p.award %}<br><span class="pub__venue">&#9733; {{ p.award }}</span>{% endif %}
+  <div class="pub__links">
+    {% if p.doi %}<a href="https://doi.org/{{ p.doi }}" target="_blank" rel="noopener"><i class="fas fa-fw fa-link" aria-hidden="true"></i> DOI</a>{% endif %}
+    {% if p.pdf %}<a href="{{ p.pdf }}" target="_blank" rel="noopener"><i class="fas fa-fw fa-file-pdf" aria-hidden="true"></i> PDF</a>{% endif %}
+    {% if p.eprint %}<a href="{{ p.eprint }}" target="_blank" rel="noopener"><i class="fas fa-fw fa-file-lines" aria-hidden="true"></i> ePrint</a>{% endif %}
+    <a href="https://scholar.google.com/scholar?q={{ p.title | url_encode }}" target="_blank" rel="noopener"><i class="fas fa-fw fa-magnifying-glass" aria-hidden="true"></i> Scholar</a>
+  </div>
+</li>
