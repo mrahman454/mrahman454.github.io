@@ -38,10 +38,10 @@
           var k = cells[r * cols + c];
           var x = c * CELL_W + CELL_W / 2, y = r * CELL_H + CELL_H / 2;
           if (k.glow > 0.02) {
-            ctx.fillStyle = 'rgba(' + k.c + ',' + (0.08 + k.glow * 0.55).toFixed(3) + ')';
+            ctx.fillStyle = 'rgba(' + k.c + ',' + (0.05 + k.glow * 0.32).toFixed(3) + ')';
             k.glow *= 0.93;
           } else {
-            ctx.fillStyle = 'rgba(88,91,112,0.16)';
+            ctx.fillStyle = 'rgba(88,91,112,0.09)';
             k.glow = 0;
           }
           ctx.fillText(k.v, x, y);

@@ -226,8 +226,8 @@
   z-index: 0;
   pointer-events: none;
   /* quieter in the middle where the text is, brighter at the edges */
-  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(0,0,0,0.35), #000 85%);
-          mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(0,0,0,0.35), #000 85%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(0,0,0,0.25), #000 90%);
+          mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(0,0,0,0.25), #000 90%);
 }
 .home {
   position: relative;
