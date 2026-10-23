@@ -4,14 +4,24 @@
    ========================================================================== */
 
 :root {
-  --acad-accent: #8b2e5f;
-  --acad-accent-soft: rgba(139, 46, 95, 0.08);
-  --acad-muted: #5f666d;
+  --acad-accent: #1f4e79;
+  --acad-accent-soft: rgba(31, 78, 121, 0.07);
+  --acad-muted: #5c6670;
+  --acad-text: #24292f;
+  --acad-rule: #e3e6ea;
+  --global-link-color: #1f5f99;
+  --global-link-color-hover: #0f3a63;
+  --global-link-color-visited: #1f5f99;
 }
 html[data-theme="dark"] {
-  --acad-accent: #e48bb8;
-  --acad-accent-soft: rgba(228, 139, 184, 0.12);
-  --acad-muted: #a9b0b7;
+  --acad-accent: #8db8e8;
+  --acad-accent-soft: rgba(141, 184, 232, 0.12);
+  --acad-muted: #a3acb6;
+  --acad-text: #e6e8eb;
+  --acad-rule: #353b42;
+  --global-link-color: #8db8e8;
+  --global-link-color-hover: #b9d4f2;
+  --global-link-color-visited: #8db8e8;
 }
 
 .acad-lead {
@@ -24,8 +34,8 @@ html[data-theme="dark"] {
   font-size: 1.25em;
   margin: 2em 0 0.8em;
   padding-bottom: 0.3em;
-  border-bottom: 2px solid var(--acad-accent);
-  color: var(--global-text-color);
+  border-bottom: 1px solid var(--acad-rule);
+  color: var(--acad-text);
 }
 
 /* Small pill labels */
@@ -173,3 +183,128 @@ html[data-theme="dark"] {
 .cv-download {
   margin: 0.5em 0 1.5em;
 }
+
+
+/* ==========================================================================
+   Site-wide typography and chrome
+   ========================================================================== */
+
+$acad-sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+$acad-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+html { font-size: 17px; }
+@media (min-width: 1280px) { html { font-size: 18px; } }
+
+body {
+  font-family: $acad-sans;
+  color: var(--acad-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.page__title,
+.archive h1,
+.author__name,
+.pub-year {
+  font-family: $acad-serif;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--acad-text);
+}
+
+.page__title {
+  font-size: 1.9em;
+  margin-bottom: 0.6em;
+}
+
+.page__content,
+.archive {
+  line-height: 1.65;
+}
+
+a { text-underline-offset: 2px; }
+.page__content a,
+.archive a {
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+/* Top bar */
+.masthead {
+  border-bottom: 1px solid var(--acad-rule);
+  background: var(--global-bg-color);
+}
+.masthead__menu-item a {
+  font-family: $acad-sans;
+  font-size: 0.95em;
+  color: var(--acad-muted);
+  &:hover { color: var(--acad-accent); }
+}
+.masthead__menu-item--lg a {
+  font-family: $acad-serif;
+  font-weight: 700;
+  font-size: 1.1em;
+  color: var(--acad-text);
+}
+.greedy-nav .visible-links a:before {
+  background: var(--acad-accent);
+  height: 2px;
+}
+
+/* Sidebar */
+.author__avatar img {
+  max-width: 150px;
+  border: 1px solid var(--acad-rule);
+  padding: 4px;
+  box-shadow: none;
+}
+.author__name {
+  font-size: 1.15em;
+  margin-top: 0.4em;
+}
+.author__bio {
+  color: var(--acad-muted);
+  font-size: 0.82em;
+  line-height: 1.5;
+}
+.author__urls {
+  font-size: 0.85em;
+  li { margin-bottom: 0.35em; }
+  a { color: var(--acad-text); }
+  a:hover { color: var(--acad-accent); text-decoration: none; }
+  i, .ai { color: var(--acad-accent); }
+}
+
+/* Calmer publication cards */
+.pub { padding-bottom: 1em; margin-bottom: 1em; }
+.pub__title { font-size: 1.02em; }
+.pub__venue { font-style: normal; }
+.acad-tag {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+}
+.acad-tag--award { color: #9a6b00; border-color: #d9b45a; background: rgba(217, 180, 90, 0.1); }
+.pub-year {
+  border-bottom: none;
+  font-size: 1.25em;
+  color: var(--acad-accent);
+}
+.news__date { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Tables */
+.acad-table th {
+  font-family: $acad-sans;
+  background: var(--acad-accent-soft);
+  color: var(--acad-text);
+}
+
+/* Footer */
+.page__footer { border-top: 1px solid var(--acad-rule); }
+
+/* Sidebar uses its own font settings in the theme; override them */
+.sidebar,
+.sidebar p,
+.sidebar li,
+.sidebar a { font-family: $acad-sans; }
+.sidebar .author__name { font-family: $acad-serif; }
