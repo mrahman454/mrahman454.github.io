@@ -1,0 +1,141 @@
+---
+permalink: /
+title: "Mostafizar Rahman"
+layout: home
+author_profile: false
+# Set this to your photo (e.g. "/images/profile.jpg") to show it in the hero.
+# Leave empty to show the "MR" monogram.
+hero_photo:
+redirect_from:
+  - /about/
+  - /about.html
+---
+
+{% include base_path %}
+{% assign journals = site.publications | where: "pubtype", "journal" %}
+{% assign confs = site.publications | where: "pubtype", "conference" %}
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__inner">
+    <div class="hero__photo">
+      {% if page.hero_photo %}
+        <img src="{{ base_path }}{{ page.hero_photo }}" alt="Mostafizar Rahman">
+      {% else %}
+        <span class="hero__monogram">MR</span>
+      {% endif %}
+    </div>
+    <div class="hero__text">
+      <p class="hero__kicker">Research Fellow &middot; Nanyang Technological University, Singapore</p>
+      <h1 class="hero__name">Mostafizar Rahman</h1>
+      <p class="hero__tagline">
+        I <span id="hero-rotator" class="hero__rotator"
+           data-words='["design symmetric-key ciphers.","break symmetric-key ciphers.","study ciphers in a quantum world.","analyse real-world crypto protocols."]'>design symmetric-key ciphers.</span><span class="hero__caret" aria-hidden="true"></span>
+      </p>
+      <div class="hero__actions">
+        <a class="hero-btn hero-btn--solid" href="{{ base_path }}/publications/"><i class="fas fa-book-open" aria-hidden="true"></i> Publications</a>
+        <a class="hero-btn" href="{{ base_path }}/cv/"><i class="fas fa-id-card" aria-hidden="true"></i> CV</a>
+        <a class="hero-btn" href="mailto:{{ site.author.email }}"><i class="fas fa-envelope" aria-hidden="true"></i> Contact</a>
+      </div>
+      <div class="hero__social">
+        {% if site.author.googlescholar %}<a href="{{ site.author.googlescholar }}" title="Google Scholar"><i class="ai ai-google-scholar" aria-hidden="true"></i><span class="sr-only">Google Scholar</span></a>{% endif %}
+        {% if site.author.orcid %}<a href="{{ site.author.orcid }}" title="ORCID"><i class="ai ai-orcid" aria-hidden="true"></i><span class="sr-only">ORCID</span></a>{% endif %}
+        {% if site.author.scopus %}<a href="{{ site.author.scopus }}" title="Scopus"><i class="ai ai-scopus" aria-hidden="true"></i><span class="sr-only">Scopus</span></a>{% endif %}
+        {% if site.author.github %}<a href="https://github.com/{{ site.author.github }}" title="GitHub"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span></a>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section class="stats">
+  <div class="stat"><span class="stat__num" data-count="{{ journals.size }}">{{ journals.size }}</span><span class="stat__label">Journal papers</span></div>
+  <div class="stat"><span class="stat__num" data-count="{{ confs.size }}">{{ confs.size }}</span><span class="stat__label">Conference papers</span></div>
+  <div class="stat"><span class="stat__num" data-count="6">6</span><span class="stat__label">Ciphers co-designed</span></div>
+  <div class="stat"><span class="stat__num" data-count="{{ site.talks.size }}">{{ site.talks.size }}</span><span class="stat__label">Talks</span></div>
+</section>
+
+<div class="home__body">
+
+<!-- ================= ABOUT ================= -->
+<section class="home-section reveal">
+  <h2 class="home-h2"><span>About</span></h2>
+  <p class="home-lead">
+    I am a <strong>Research Fellow</strong> at <strong>Nanyang Technological University (NTU), Singapore</strong>, working on symmetric-key cryptography. Before joining NTU, I was a Program-Specific Researcher at <strong>Kyoto University</strong> and a postdoctoral researcher at the <strong>University of Hyogo</strong>, Japan. I received my Ph.D. in Computer Science from the <strong>Indian Statistical Institute, Kolkata</strong>, with a thesis on cryptanalysis of symmetric-key schemes using classical and quantum techniques.
+  </p>
+</section>
+
+<!-- ================= RESEARCH AREAS ================= -->
+<section class="home-section">
+  <h2 class="home-h2 reveal"><span>Research</span></h2>
+  <div class="areas">
+    <div class="area reveal" style="--d:0ms">
+      <div class="area__icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
+      <h3>Cipher design</h3>
+      <p>Low-latency, high-throughput and post-quantum block ciphers, PRFs and authenticated encryption.</p>
+    </div>
+    <div class="area reveal" style="--d:100ms">
+      <div class="area__icon"><i class="fas fa-magnifying-glass" aria-hidden="true"></i></div>
+      <h3>Cryptanalysis</h3>
+      <p>Yoyo, boomerang, differential, division-property and fault attacks, plus automated tools with MILP and SAT.</p>
+    </div>
+    <div class="area reveal" style="--d:200ms">
+      <div class="area__icon"><i class="fas fa-atom" aria-hidden="true"></i></div>
+      <h3>Quantum cryptanalysis</h3>
+      <p>Grover and Simon based attacks and quantum resource estimation for symmetric-key primitives.</p>
+    </div>
+    <div class="area reveal" style="--d:300ms">
+      <div class="area__icon"><i class="fas fa-key" aria-hidden="true"></i></div>
+      <h3>Real-world protocols</h3>
+      <p>Key commitment of AEAD schemes and the security of symmetric-key primitives inside deployed protocols.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CIPHERS ================= -->
+<section class="home-section">
+  <h2 class="home-h2 reveal"><span>Ciphers I co-designed</span></h2>
+  <div class="ciphers reveal">
+    <a class="cipher" href="https://doi.org/10.46586/TCHES.V2025.I2.705-742"><span class="cipher__name">AETHER</span><span class="cipher__venue">TCHES 2025 &#9733;</span></a>
+    <a class="cipher" href="https://doi.org/10.46586/tosc.v2025.i4.70-124"><span class="cipher__name">Dialga</span><span class="cipher__venue">ToSC 2025</span></a>
+    <a class="cipher" href="https://doi.org/10.62056/av11c3c2h"><span class="cipher__name">MSX</span><span class="cipher__venue">CiC 2025</span></a>
+    <a class="cipher" href="https://doi.org/10.46586/TCHES.V2024.I2.545-587"><span class="cipher__name">Gleeok</span><span class="cipher__venue">TCHES 2024</span></a>
+    <a class="cipher" href="https://doi.org/10.1007/978-3-031-80308-6_7"><span class="cipher__name">ASURA</span><span class="cipher__venue">INDOCRYPT 2024</span></a>
+    <a class="cipher" href="https://doi.org/10.1007/978-3-031-35486-1_18"><span class="cipher__name">Ghidle</span><span class="cipher__venue">ACISP 2023</span></a>
+  </div>
+</section>
+
+<!-- ================= NEWS ================= -->
+<section class="home-section">
+  <h2 class="home-h2 reveal"><span>News</span></h2>
+  <ol class="timeline">
+    <li class="reveal"><span class="timeline__date">Jul 2026</span><p>Research visit to Prof. Takanori Isobe at The University of Osaka on the design of a post-quantum wide block cipher.</p></li>
+    <li class="reveal"><span class="timeline__date">Dec 2025</span><p>Invited talks at the Crypto Winter School 2025 and the National Workshop on Cryptology, IIT Bhilai.</p></li>
+    <li class="reveal"><span class="timeline__date">Oct 2025</span><p>Joined <strong>Nanyang Technological University</strong>, Singapore as a Research Fellow.</p></li>
+    <li class="reveal timeline__item--hot"><span class="timeline__date">2025</span><p>&#127942; <strong>AETHER</strong> received the <strong>Excellent Paper Award</strong> at the Computer Security Symposium 2025.</p></li>
+    <li class="reveal"><span class="timeline__date">2025</span><p><strong>Dialga</strong> in IACR ToSC; <strong>MSX</strong> and <strong>SHA instructions for AES-based schemes</strong> in IACR CiC; <strong>Twinkle</strong> cryptanalysis at SAC 2025.</p></li>
+    <li class="reveal"><span class="timeline__date">2025</span><p>Joined the editorial board of <strong>IACR Communications in Cryptology</strong>.</p></li>
+    <li class="reveal"><span class="timeline__date">May 2025</span><p>Joined Kyoto University as a Program-Specific Researcher.</p></li>
+  </ol>
+</section>
+
+<!-- ================= SELECTED PUBLICATIONS ================= -->
+<section class="home-section">
+  <h2 class="home-h2 reveal"><span>Selected publications</span></h2>
+  <ul class="pub-list pub-list--cards">
+    {% assign selected = site.publications | where: "selected", true | sort: "date" | reverse %}
+    {% for p in selected %}{% include pub-entry.html pub=p %}{% endfor %}
+  </ul>
+  <p class="home-more reveal"><a href="{{ base_path }}/publications/">See all {{ site.publications.size }} publications <i class="fas fa-arrow-right" aria-hidden="true"></i></a></p>
+</section>
+
+</div>
+
+<!-- ================= CONTACT ================= -->
+<section class="cta reveal">
+  <h2>Let's collaborate</h2>
+  <p>Interested in cipher design, cryptanalysis or a research visit? I'm happy to hear from you.</p>
+  <a class="hero-btn hero-btn--solid" href="mailto:{{ site.author.email }}"><i class="fas fa-envelope" aria-hidden="true"></i> {{ site.author.email }}</a>
+</section>
