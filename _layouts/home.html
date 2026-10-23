@@ -4,10 +4,10 @@ layout: default
 
 {% include base_path %}
 
-<canvas id="hex-bg" aria-hidden="true"></canvas>
+<canvas id="hex-bg" aria-hidden="true" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 
-<div class="home">
+<div class="home" style="position:relative;z-index:1;">
   {{ content }}
 </div>
 
-<script src="{{ base_path }}/assets/js/home.js" defer></script>
+<script src="{{ base_path }}/assets/js/home.js?v={{ site.time | date: '%s' }}" defer></script>
