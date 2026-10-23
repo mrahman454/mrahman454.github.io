@@ -207,16 +207,39 @@
   a { color: var(--ctp-green); }
 }
 
-/* Fade-in when scrolled into view (only when JS runs) */
-.js .reveal {
+/* Fade-in when scrolled into view. Content stays visible unless
+   home.js is running and has switched this on. */
+.reveal-on .reveal {
   opacity: 0;
   transition: opacity 0.6s ease-out;
   transition-delay: var(--d, 0ms);
 }
-.js .reveal.is-visible { opacity: 1; }
-@media (prefers-reduced-motion: reduce) {
-  .js .reveal { opacity: 1; transition: none; }
+.reveal-on .reveal.is-visible { opacity: 1; }
+
+/* Blinking hex background behind the home page */
+#hex-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  /* quieter in the middle where the text is, brighter at the edges */
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(0,0,0,0.35), #000 85%);
+          mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(0,0,0,0.35), #000 85%);
 }
+.home {
+  position: relative;
+  z-index: 1;
+}
+/* Keep text readable on top of the background */
+.t-text, .t-out, .t-log, .t-ls, .t-section .pub-list {
+  background: rgba(30, 30, 46, 0.82);
+  border-radius: 6px;
+}
+.t-text, .t-log { padding-top: 0.6em; padding-bottom: 0.6em; padding-right: 0.8em; }
+.page__footer { position: relative; z-index: 1; }
 
 /* ---------- Small screens ---------- */
 @media (max-width: 820px) {
