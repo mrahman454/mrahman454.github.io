@@ -226,3 +226,108 @@
 
   window.addEventListener('resize', function () { ox = 0; oy = 0; apply(); });
 })();
+
+/* ---------- Greet the visitor by country (from the browser's time zone) ----------
+   Nothing is sent anywhere: the time zone comes from the visitor's own browser. */
+(function () {
+  var box = document.getElementById('visitor');
+  var out = document.getElementById('visitor-msg');
+  if (!box || !out || !window.Intl) return;
+
+  var tz = '';
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { return; }
+
+  /* time zone -> [country, code] */
+  var Z = {
+    'Asia/Tokyo': ['Japan', 'JP'], 'Asia/Kolkata': ['India', 'IN'], 'Asia/Calcutta': ['India', 'IN'],
+    'Asia/Singapore': ['Singapore', 'SG'], 'Asia/Dhaka': ['Bangladesh', 'BD'], 'Asia/Shanghai': ['China', 'CN'],
+    'Asia/Chongqing': ['China', 'CN'], 'Asia/Urumqi': ['China', 'CN'], 'Asia/Hong_Kong': ['Hong Kong', 'HK'],
+    'Asia/Taipei': ['Taiwan', 'TW'], 'Asia/Seoul': ['South Korea', 'KR'], 'Asia/Kathmandu': ['Nepal', 'NP'],
+    'Asia/Colombo': ['Sri Lanka', 'LK'], 'Asia/Karachi': ['Pakistan', 'PK'], 'Asia/Dubai': ['the UAE', 'AE'],
+    'Asia/Riyadh': ['Saudi Arabia', 'SA'], 'Asia/Qatar': ['Qatar', 'QA'], 'Asia/Tehran': ['Iran', 'IR'],
+    'Asia/Jerusalem': ['Israel', 'IL'], 'Asia/Tel_Aviv': ['Israel', 'IL'], 'Asia/Bangkok': ['Thailand', 'TH'],
+    'Asia/Ho_Chi_Minh': ['Vietnam', 'VN'], 'Asia/Saigon': ['Vietnam', 'VN'], 'Asia/Jakarta': ['Indonesia', 'ID'],
+    'Asia/Kuala_Lumpur': ['Malaysia', 'MY'], 'Asia/Manila': ['the Philippines', 'PH'], 'Asia/Thimphu': ['Bhutan', 'BT'],
+    'Asia/Yangon': ['Myanmar', 'MM'], 'Asia/Almaty': ['Kazakhstan', 'KZ'], 'Asia/Tashkent': ['Uzbekistan', 'UZ'],
+    'Europe/London': ['the UK', 'GB'], 'Europe/Dublin': ['Ireland', 'IE'], 'Europe/Paris': ['France', 'FR'],
+    'Europe/Berlin': ['Germany', 'DE'], 'Europe/Amsterdam': ['the Netherlands', 'NL'], 'Europe/Brussels': ['Belgium', 'BE'],
+    'Europe/Luxembourg': ['Luxembourg', 'LU'], 'Europe/Zurich': ['Switzerland', 'CH'], 'Europe/Vienna': ['Austria', 'AT'],
+    'Europe/Rome': ['Italy', 'IT'], 'Europe/Madrid': ['Spain', 'ES'], 'Europe/Lisbon': ['Portugal', 'PT'],
+    'Europe/Copenhagen': ['Denmark', 'DK'], 'Europe/Oslo': ['Norway', 'NO'], 'Europe/Stockholm': ['Sweden', 'SE'],
+    'Europe/Helsinki': ['Finland', 'FI'], 'Europe/Warsaw': ['Poland', 'PL'], 'Europe/Prague': ['Czechia', 'CZ'],
+    'Europe/Budapest': ['Hungary', 'HU'], 'Europe/Bucharest': ['Romania', 'RO'], 'Europe/Athens': ['Greece', 'GR'],
+    'Europe/Istanbul': ['Türkiye', 'TR'], 'Europe/Kiev': ['Ukraine', 'UA'], 'Europe/Kyiv': ['Ukraine', 'UA'],
+    'Europe/Moscow': ['Russia', 'RU'], 'Europe/Tallinn': ['Estonia', 'EE'], 'Europe/Riga': ['Latvia', 'LV'],
+    'Europe/Vilnius': ['Lithuania', 'LT'], 'Europe/Belgrade': ['Serbia', 'RS'], 'Europe/Zagreb': ['Croatia', 'HR'],
+    'Europe/Ljubljana': ['Slovenia', 'SI'], 'Europe/Sofia': ['Bulgaria', 'BG'], 'Europe/Bratislava': ['Slovakia', 'SK'],
+    'America/New_York': ['the USA', 'US'], 'America/Chicago': ['the USA', 'US'], 'America/Denver': ['the USA', 'US'],
+    'America/Phoenix': ['the USA', 'US'], 'America/Los_Angeles': ['the USA', 'US'], 'America/Anchorage': ['the USA', 'US'],
+    'America/Detroit': ['the USA', 'US'], 'Pacific/Honolulu': ['the USA', 'US'], 'America/Toronto': ['Canada', 'CA'],
+    'America/Vancouver': ['Canada', 'CA'], 'America/Edmonton': ['Canada', 'CA'], 'America/Winnipeg': ['Canada', 'CA'],
+    'America/Halifax': ['Canada', 'CA'], 'America/Montreal': ['Canada', 'CA'], 'America/Mexico_City': ['Mexico', 'MX'],
+    'America/Sao_Paulo': ['Brazil', 'BR'], 'America/Argentina/Buenos_Aires': ['Argentina', 'AR'], 'America/Buenos_Aires': ['Argentina', 'AR'],
+    'America/Santiago': ['Chile', 'CL'], 'America/Bogota': ['Colombia', 'CO'], 'America/Lima': ['Peru', 'PE'],
+    'Australia/Sydney': ['Australia', 'AU'], 'Australia/Melbourne': ['Australia', 'AU'], 'Australia/Brisbane': ['Australia', 'AU'],
+    'Australia/Perth': ['Australia', 'AU'], 'Australia/Adelaide': ['Australia', 'AU'], 'Australia/Canberra': ['Australia', 'AU'],
+    'Pacific/Auckland': ['New Zealand', 'NZ'], 'Africa/Cairo': ['Egypt', 'EG'], 'Africa/Johannesburg': ['South Africa', 'ZA'],
+    'Africa/Lagos': ['Nigeria', 'NG'], 'Africa/Nairobi': ['Kenya', 'KE'], 'Africa/Casablanca': ['Morocco', 'MA'],
+    'Africa/Tunis': ['Tunisia', 'TN'], 'Africa/Algiers': ['Algeria', 'DZ'], 'Africa/Accra': ['Ghana', 'GH']
+  };
+  var HELLO = {
+    JP: 'こんにちは', IN: 'नमस्ते', BD: 'স্বাগতম', SG: 'Hello', US: 'Howdy', GB: 'Cheers', IE: 'Dia duit',
+    CA: 'Hello', AU: 'G’day', BT: 'Kuzuzangpo', MM: 'Mingalaba', NG: 'Hello', GH: 'Akwaaba', CN: '你好', HK: '你好', TW: '你好', KR: '안녕하세요',
+    NP: 'नमस्ते', LK: 'ආයුබෝවන්', PK: 'السلام علیکم', AE: 'مرحبا', SA: 'مرحبا', QA: 'مرحبا', EG: 'مرحبا',
+    MA: 'مرحبا', TN: 'مرحبا', DZ: 'مرحبا', IR: 'سلام', IL: 'שלום', TH: 'สวัสดี', VN: 'Xin chào',
+    ID: 'Halo', MY: 'Hai', PH: 'Kumusta', FR: 'Bonjour', BE: 'Bonjour', LU: 'Moien', DE: 'Hallo',
+    AT: 'Servus', CH: 'Grüezi', NL: 'Hallo', IT: 'Ciao', ES: 'Hola', MX: 'Hola', AR: 'Hola', CL: 'Hola',
+    CO: 'Hola', PE: 'Hola', PT: 'Olá', BR: 'Olá', DK: 'Hej', SE: 'Hej', NO: 'Hei', FI: 'Hei',
+    PL: 'Cześć', CZ: 'Ahoj', SK: 'Ahoj', HU: 'Szia', RO: 'Salut', GR: 'Γεια σου', TR: 'Merhaba',
+    UA: 'Привіт', RU: 'Привет', EE: 'Tere', LV: 'Sveiki', LT: 'Labas', RS: 'Zdravo', HR: 'Bok',
+    SI: 'Živjo', BG: 'Здравей', KZ: 'Сәлем', UZ: 'Salom', KE: 'Jambo', ZA: 'Sawubona', NZ: 'Kia ora'
+  };
+
+  var hit = Z[tz];
+  var city = tz.indexOf('/') > -1 ? tz.split('/').pop().replace(/_/g, ' ') : '';
+  var RENAMED = { 'Calcutta': 'Kolkata', 'Saigon': 'Ho Chi Minh City', 'Kiev': 'Kyiv', 'Rangoon': 'Yangon', 'Katmandu': 'Kathmandu' };
+  if (RENAMED[city]) city = RENAMED[city];
+  var hour = new Date().getHours();
+  var time = '';
+  try { time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); } catch (e) {}
+
+  /* message built as coloured pieces: [text, class] */
+  var parts = [];
+  if (hit) {
+    parts.push(['Hey visitor from ', ''], [hit[0], 'v-place'], [' ', ''], ['[' + hit[1] + ']', 'v-cc'], ['! ', '']);
+    if (HELLO[hit[1]]) parts.push([HELLO[hit[1]], 'v-hello'], ['! ', '']);
+  } else if (city) {
+    parts.push(['Hey visitor from ', ''], [city, 'v-place'], ['! ', '']);
+  } else {
+    parts.push(['Hey there, visitor! ', '']);
+  }
+  if (time) parts.push(["It's ", ''], [time, 'v-time'], [city ? ' in ' + city + '.' : ' where you are.', '']);
+  if (hour >= 23 || hour < 5) parts.push([' Burning the midnight oil? ☕', '']);
+  else if (hour < 9) parts.push([' Early bird, I see.', '']);
+
+  box.hidden = false;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    parts.forEach(function (p) { var s = document.createElement('span'); s.className = p[1]; s.textContent = p[0]; out.appendChild(s); });
+    return;
+  }
+
+  /* type it out, character by character */
+  var pi = 0, ci = 0, span = null;
+  var cursor = document.createElement('span');
+  cursor.className = 'blink';
+  cursor.textContent = '_';
+  out.appendChild(cursor);
+  function type() {
+    if (pi >= parts.length) { setTimeout(function () { cursor.remove(); }, 1500); return; }
+    if (!span) { span = document.createElement('span'); span.className = parts[pi][1]; out.insertBefore(span, cursor); }
+    var chars = Array.from(parts[pi][0]);
+    span.textContent = chars.slice(0, ++ci).join('');
+    if (ci >= chars.length) { pi++; ci = 0; span = null; }
+    setTimeout(type, 28);
+  }
+  setTimeout(type, 400);
+})();

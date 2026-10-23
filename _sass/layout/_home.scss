@@ -253,3 +253,11 @@
   .t-state { font-size: 0.8em; gap: 0.2em 0.3em; padding: 0.9em; }
   .t-ls { grid-template-columns: 1fr; }
 }
+
+/* Visitor greeting ("$ finger guest") */
+.t-visitor .t-out { margin-bottom: 1.4em; }
+#visitor-msg { color: var(--ctp-text); min-height: 1.7em; }
+#visitor-msg .v-place { color: var(--ctp-peach); }
+#visitor-msg .v-hello { color: var(--ctp-mauve); }
+#visitor-msg .v-time { color: var(--ctp-teal); }
+#visitor-msg .v-cc { color: var(--ctp-surface2); }
