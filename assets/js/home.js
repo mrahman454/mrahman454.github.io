@@ -4,6 +4,7 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var HEX = '0123456789abcdef';
   function rb() { return HEX[Math.random() * 16 | 0] + HEX[Math.random() * 16 | 0]; }
+  function serious() { return document.documentElement.classList.contains('serious'); }
 
   /* ---------- Background: grid of hex bytes that blink ---------- */
   var bg = document.getElementById('hex-bg');
@@ -49,6 +50,7 @@
       }
     }
     function tick() {
+      if (serious()) return;
       var n = Math.max(4, cells.length / 120 | 0);
       for (var i = 0; i < n; i++) {
         var k = cells[Math.random() * cells.length | 0];
@@ -81,6 +83,7 @@
       el.classList.add(cls);
     }
     function step1() {
+      if (serious()) return;
       for (var n = 0; n < 3; n++) flash(boxes[Math.random() * boxes.length | 0], 'hot');
       if (step % 6 === 0) {
         var c = (step / 6) % COLS;
@@ -207,6 +210,7 @@
   }
 
   document.addEventListener('mousemove', function (e) {
+    if (document.documentElement.classList.contains('serious')) return;
     var now = Date.now();
     if (now - lastMove < 120) return;   /* let the previous hop finish */
     var r = win.getBoundingClientRect();
@@ -225,6 +229,7 @@
   }, { passive: true });
 
   window.addEventListener('resize', function () { ox = 0; oy = 0; apply(); });
+  document.addEventListener('modechange', function () { ox = 0; oy = 0; apply(); });
 })();
 
 /* ---------- Greet the visitor by country (from the browser's time zone) ----------

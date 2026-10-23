@@ -22,11 +22,12 @@ redirect_from:
     <div class="t-cmd reveal"><span class="t-p">$</span> whoami</div>
     <h1 class="t-name reveal">Mostafizar <span>Rahman</span></h1>
     <div class="t-out reveal" style="--d:100ms">
-      <p>Research Fellow @ <a href="https://www.ntu.edu.sg/">NTU Singapore</a></p>
-      <p>Ph.D. @ <a href="https://www.isical.ac.in/">ISI Kolkata</a></p>
+      <p>Research Fellow<span class="at"> @ </span><span class="s-sep">, </span><a href="https://www.ntu.edu.sg/"><span class="f-inline">NTU Singapore</span><span class="s-inline">Nanyang Technological University, Singapore</span></a></p>
+      <p>Ph.D.<span class="at"> @ </span><span class="s-sep">, </span><a href="https://www.isical.ac.in/"><span class="f-inline">ISI Kolkata</span><span class="s-inline">Indian Statistical Institute, Kolkata</span></a></p>
     </div>
 
     <div class="t-cmd reveal" style="--d:200ms"><span class="t-p">$</span> echo <span class="t-str">"$RESEARCH_INTERESTS"</span></div>
+    <h2 class="s-title s-title--small">Research interests</h2>
     <div class="t-out t-out--list reveal" style="--d:300ms">
       <p>symmetric-key cipher design</p>
       <p>cryptanalysis (classical &amp; automated)</p>
@@ -35,12 +36,12 @@ redirect_from:
     </div>
 
     <nav class="t-links reveal" style="--d:400ms" aria-label="Links">
-      <a href="{{ base_path }}/publications/">[publications]</a>
-      <a href="{{ base_path }}/cv/">[cv]</a>
-      {% if site.author.googlescholar %}<a href="{{ site.author.googlescholar }}">[scholar]</a>{% endif %}
-      {% if site.author.orcid %}<a href="{{ site.author.orcid }}">[orcid]</a>{% endif %}
-      {% if site.author.github %}<a href="https://github.com/{{ site.author.github }}">[github]</a>{% endif %}
-      <a href="mailto:{{ site.author.email }}">[email]</a>
+      <a href="{{ base_path }}/publications/"><span class="br">[</span>Publications<span class="br">]</span></a>
+      <a href="{{ base_path }}/cv/"><span class="br">[</span>CV<span class="br">]</span></a>
+      {% if site.author.googlescholar %}<a href="{{ site.author.googlescholar }}"><span class="br">[</span>Google Scholar<span class="br">]</span></a>{% endif %}
+      {% if site.author.orcid %}<a href="{{ site.author.orcid }}"><span class="br">[</span>ORCID<span class="br">]</span></a>{% endif %}
+      {% if site.author.github %}<a href="https://github.com/{{ site.author.github }}"><span class="br">[</span>GitHub<span class="br">]</span></a>{% endif %}
+      <a href="mailto:{{ site.author.email }}"><span class="br">[</span>Email<span class="br">]</span></a>
     </nav>
   </div>
 
@@ -69,6 +70,7 @@ redirect_from:
 <!-- ===== about ===== -->
 <section class="t-section reveal">
   <div class="t-cmd"><span class="t-p">$</span> cat about.txt</div>
+  <h2 class="s-title">About</h2>
   <div class="t-text">
     <p>I am a Research Fellow at <span class="hl">Nanyang Technological University (NTU), Singapore</span>, working on symmetric-key cryptography. Before NTU, I was a Program-Specific Researcher at <span class="hl">Kyoto University</span> and a postdoctoral researcher at the <span class="hl">University of Hyogo</span>, Japan. I received my Ph.D. in Computer Science from the <span class="hl">Indian Statistical Institute, Kolkata</span>, with a thesis on cryptanalysis of symmetric-key schemes using classical and quantum techniques.</p>
     <p>I design ciphers (low-latency, high-throughput and post-quantum), break them (yoyo, boomerang, differential, division-property and fault attacks, often with MILP/SAT tools), study them against quantum adversaries, and look at how they behave inside real-world protocols, such as key commitment in AEAD.</p>
@@ -78,43 +80,48 @@ redirect_from:
 <!-- ===== ciphers ===== -->
 <section class="t-section reveal">
   <div class="t-cmd"><span class="t-p">$</span> ls -l ~/ciphers/</div>
+  <h2 class="s-title">Ciphers I co-designed</h2>
   <div class="t-ls">
-    <a href="https://doi.org/10.46586/TCHES.V2025.I2.705-742"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">AETHER/</span><span class="t-meta">TCHES 2025 <span class="t-star">&#9733; award</span></span></a>
-    <a href="https://doi.org/10.46586/tosc.v2025.i4.70-124"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">Dialga/</span><span class="t-meta">ToSC 2025</span></a>
-    <a href="https://doi.org/10.62056/av11c3c2h"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">MSX/</span><span class="t-meta">CiC 2025</span></a>
-    <a href="https://doi.org/10.46586/TCHES.V2024.I2.545-587"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">Gleeok/</span><span class="t-meta">TCHES 2024</span></a>
-    <a href="https://doi.org/10.1007/978-3-031-80308-6_7"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">ASURA/</span><span class="t-meta">INDOCRYPT 2024</span></a>
-    <a href="https://doi.org/10.1007/978-3-031-35486-1_18"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">Ghidle/</span><span class="t-meta">ACISP 2023</span></a>
+    <a href="https://doi.org/10.46586/TCHES.V2025.I2.705-742"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">AETHER<span class="br">/</span></span><span class="t-meta">TCHES 2025 <span class="t-star">&#9733; award</span></span></a>
+    <a href="https://doi.org/10.46586/tosc.v2025.i4.70-124"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">Dialga<span class="br">/</span></span><span class="t-meta">ToSC 2025</span></a>
+    <a href="https://doi.org/10.62056/av11c3c2h"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">MSX<span class="br">/</span></span><span class="t-meta">CiC 2025</span></a>
+    <a href="https://doi.org/10.46586/TCHES.V2024.I2.545-587"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">Gleeok<span class="br">/</span></span><span class="t-meta">TCHES 2024</span></a>
+    <a href="https://doi.org/10.1007/978-3-031-80308-6_7"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">ASURA<span class="br">/</span></span><span class="t-meta">INDOCRYPT 2024</span></a>
+    <a href="https://doi.org/10.1007/978-3-031-35486-1_18"><span class="t-perm">drwxr-xr-x</span><span class="t-dir">Ghidle<span class="br">/</span></span><span class="t-meta">ACISP 2023</span></a>
   </div>
 </section>
 
 <!-- ===== news ===== -->
 <section class="t-section reveal">
   <div class="t-cmd"><span class="t-p">$</span> tail -n 7 news.log</div>
+  <h2 class="s-title">News</h2>
   <ul class="t-log">
-    <li><span class="t-date">[2026-07]</span> Research visit to Prof. Takanori Isobe, The University of Osaka: design of a post-quantum wide block cipher.</li>
-    <li><span class="t-date">[2025-12]</span> Invited talks at the Crypto Winter School 2025 and the National Workshop on Cryptology, IIT Bhilai.</li>
-    <li><span class="t-date">[2025-10]</span> Joined <span class="hl">Nanyang Technological University</span>, Singapore as a Research Fellow.</li>
-    <li class="t-log--award"><span class="t-date">[2025]</span> <span class="t-star">&#9733;</span> AETHER received the <span class="hl-y">Excellent Paper Award</span> at the Computer Security Symposium 2025.</li>
-    <li><span class="t-date">[2025]</span> Dialga in IACR ToSC; MSX and SHA instructions for AES-based schemes in IACR CiC; Twinkle cryptanalysis at SAC 2025.</li>
-    <li><span class="t-date">[2025]</span> Joined the editorial board of IACR Communications in Cryptology.</li>
-    <li><span class="t-date">[2025-05]</span> Joined Kyoto University as a Program-Specific Researcher.</li>
+    <li><span class="t-date"><span class="br">[</span>2026-07<span class="br">]</span></span> Research visit to Prof. Takanori Isobe, The University of Osaka: design of a post-quantum wide block cipher.</li>
+    <li><span class="t-date"><span class="br">[</span>2025-12<span class="br">]</span></span> Invited talks at the Crypto Winter School 2025 and the National Workshop on Cryptology, IIT Bhilai.</li>
+    <li><span class="t-date"><span class="br">[</span>2025-10<span class="br">]</span></span> Joined <span class="hl">Nanyang Technological University</span>, Singapore as a Research Fellow.</li>
+    <li class="t-log--award"><span class="t-date"><span class="br">[</span>2025<span class="br">]</span></span> <span class="t-star">&#9733;</span> AETHER received the <span class="hl-y">Excellent Paper Award</span> at the Computer Security Symposium 2025.</li>
+    <li><span class="t-date"><span class="br">[</span>2025<span class="br">]</span></span> Dialga in IACR ToSC; MSX and SHA instructions for AES-based schemes in IACR CiC; Twinkle cryptanalysis at SAC 2025.</li>
+    <li><span class="t-date"><span class="br">[</span>2025<span class="br">]</span></span> Joined the editorial board of IACR Communications in Cryptology.</li>
+    <li><span class="t-date"><span class="br">[</span>2025-05<span class="br">]</span></span> Joined Kyoto University as a Program-Specific Researcher.</li>
   </ul>
 </section>
 
 <!-- ===== selected publications ===== -->
 <section class="t-section reveal">
   <div class="t-cmd"><span class="t-p">$</span> cat selected_papers.txt</div>
+  <h2 class="s-title">Selected publications</h2>
   <ul class="pub-list">
     {% assign selected = site.publications | where: "selected", true | sort: "date" | reverse %}
     {% for p in selected %}{% include pub-entry.html pub=p %}{% endfor %}
   </ul>
-  <p class="t-more"><a href="{{ base_path }}/publications/">$ ls publications/ &nbsp;&rarr; all {{ site.publications.size }} papers</a></p>
+  <p class="t-more"><a href="{{ base_path }}/publications/"><span class="t-p">$ ls publications/ &nbsp;&rarr;</span> All {{ site.publications.size }} publications</a></p>
 </section>
 
 <!-- ===== contact ===== -->
 <section class="t-section reveal">
   <div class="t-cmd"><span class="t-p">$</span> mail <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a><span class="blink">_</span></div>
+  <h2 class="s-title">Contact</h2>
+  <p class="t-text s-only">Email: <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></p>
   <p class="t-text t-dim">Open to collaborations on cipher design, cryptanalysis and research visits.</p>
 </section>
 
