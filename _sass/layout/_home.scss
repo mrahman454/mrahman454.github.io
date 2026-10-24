@@ -254,7 +254,7 @@
   .t-ls { grid-template-columns: 1fr; }
 }
 
-/* Visitor greeting ("$ finger guest") */
+/* Visitor greeting ("$ ./greet --visitor") */
 .t-visitor .t-out { margin-bottom: 1.4em; }
 #visitor-msg { color: var(--ctp-text); min-height: 1.7em; }
 #visitor-msg .v-place { color: var(--ctp-peach); }
