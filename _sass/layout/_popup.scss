@@ -1,0 +1,183 @@
+/* ==========================================================================
+   Publication "key points" pop-up and the inline "Abstract" button.
+   Colours come from the --ctp-* variables, so it follows fun / serious mode.
+   ========================================================================== */
+
+/* ---------- "Abstract" button and the in-place full abstract ---------- */
+.pub__abs-btn {
+  font: inherit;
+  font-size: 0.85em;
+  margin-right: 0.9em;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--ctp-overlay);
+  &:hover { color: var(--ctp-blue); }
+  &[aria-expanded="true"] { color: var(--ctp-blue); }
+}
+.pub__links a, .pub__abs-btn { display: inline-block; }
+.pub__abstract {
+  margin-top: 0.6em;
+  padding: 0.75em 0.95em;
+  border-left: 2px solid var(--ctp-mauve);
+  border-radius: 0 6px 6px 0;
+  background: var(--ctp-mantle);
+  color: var(--ctp-text);
+  font-size: 0.92em;
+  line-height: 1.6;
+}
+.pub__abstract[hidden], .pub__highlights[hidden] { display: none; }
+
+/* ---------- Pop-up window ---------- */
+.abs-pop {
+  position: fixed;
+  z-index: 60;
+  top: 0;
+  left: 0;
+  width: 420px;
+  background: var(--ctp-mantle);
+  color: var(--ctp-text);
+  border: 1px solid var(--ctp-surface1);
+  border-radius: 10px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 22px 48px -12px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(0, 0, 0, 0.15);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px) scale(0.98);
+  transform-origin: var(--arrow-x, 40px) 0;
+  transition: opacity 0.16s ease, transform 0.18s cubic-bezier(.2, .9, .3, 1.15), visibility 0s linear 0.18s;
+}
+.abs-pop.is-above { transform-origin: var(--arrow-x, 40px) 100%; transform: translateY(-6px) scale(0.98); }
+.abs-pop.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.16s ease, transform 0.18s cubic-bezier(.2, .9, .3, 1.15), visibility 0s;
+}
+
+/* children appear together with the window (the theme gives some elements their own transitions) */
+.abs-pop * { transition: none !important; }
+
+/* little arrow pointing at the paper */
+.abs-pop__arrow {
+  position: absolute;
+  left: var(--arrow-x, 40px);
+  top: -6px;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  background: var(--ctp-surface0);
+  border-left: 1px solid var(--ctp-surface1);
+  border-top: 1px solid var(--ctp-surface1);
+  transform: rotate(45deg);
+}
+.abs-pop.is-above .abs-pop__arrow {
+  top: auto;
+  bottom: -6px;
+  background: var(--ctp-mantle);
+  border: none;
+  border-right: 1px solid var(--ctp-surface1);
+  border-bottom: 1px solid var(--ctp-surface1);
+}
+
+.abs-pop__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.5em 0.85em;
+  background: var(--ctp-surface0);
+  border-bottom: 1px solid var(--ctp-surface1);
+  border-radius: 10px 10px 0 0;
+}
+.abs-pop__dots { display: inline-flex; gap: 5px; }
+.abs-pop__dots i {
+  width: 8px; height: 8px; border-radius: 50%; display: block; background: var(--ctp-red);
+  &:nth-child(2) { background: var(--ctp-yellow); }
+  &:nth-child(3) { background: var(--ctp-green); }
+}
+.abs-pop__title { color: var(--ctp-subtext); font-size: 0.92em; }
+.abs-pop__title b { color: var(--ctp-green); font-weight: 500; }
+.abs-pop__label { display: none; }
+
+.abs-pop__body { padding: 0.75em 0.95em 0.6em; }
+
+.abs-pop__tags { display: flex; flex-wrap: wrap; gap: 0.35em; margin-bottom: 0.65em; }
+.abs-pop__tag {
+  font-size: 0.82em;
+  padding: 0.05em 0.55em;
+  border-radius: 999px;
+  border: 1px solid var(--ctp-surface2);
+  color: var(--ctp-subtext);
+  white-space: nowrap;
+}
+.abs-pop__tag--venue { border-color: var(--ctp-mauve); color: var(--ctp-mauve); }
+.abs-pop__tag--area { border-color: var(--ctp-teal); color: var(--ctp-teal); }
+.abs-pop__tag--award { border-color: var(--ctp-yellow); color: var(--ctp-yellow); }
+
+.abs-pop__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    position: relative;
+    padding-left: 1.2em;
+    margin: 0 0 0.45em;
+  }
+  li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--ctp-green);
+  }
+}
+.abs-pop__foot {
+  margin-top: 0.35em;
+  padding: 0.45em 0.95em 0.55em;
+  border-top: 1px dashed var(--ctp-surface1);
+  font-size: 0.86em;
+  color: var(--ctp-overlay);
+}
+.abs-pop__foot b { color: var(--ctp-blue); font-weight: 500; }
+
+@media (prefers-reduced-motion: reduce) {
+  .abs-pop, .abs-pop.is-above, .abs-pop.is-open { transition: none; transform: none; }
+}
+
+/* ---------- Serious mode look ---------- */
+html.serious {
+  .abs-pop {
+    font-family: "Source Sans 3", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 0.88rem;
+    background: #f7f9fb;
+    border-color: var(--ctp-surface1);
+    box-shadow: 0 18px 40px -14px rgba(27, 35, 48, 0.35), 0 0 0 1px rgba(27, 35, 48, 0.04);
+  }
+  .abs-pop.is-above .abs-pop__arrow { background: #f7f9fb; }
+  .abs-pop__head { background: var(--ctp-crust); }
+  .abs-pop__dots, .abs-pop__title { display: none; }
+  .abs-pop__label {
+    display: inline;
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 700;
+    color: var(--ctp-text);
+  }
+  .abs-pop__list li::before {
+    content: "";
+    top: 0.62em;
+    left: 0.25em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ctp-blue);
+  }
+  .abs-pop__tag--venue, .abs-pop__tag--area { border-color: var(--ctp-blue); color: var(--ctp-blue); }
+  .pub__abstract { border-left-color: var(--ctp-blue); font-family: "Source Sans 3", sans-serif; }
+  .pub__abs-btn { font-family: "Source Sans 3", sans-serif; }
+}

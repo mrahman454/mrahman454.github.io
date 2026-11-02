@@ -178,15 +178,6 @@ html.serious {
   .t-more a .t-p { display: none; }
   .t-more a { color: var(--ctp-blue); font-weight: 600; }
 
-  /* Abstract pop-up */
-  .abs-pop { font-family: $s-sans; font-size: 0.9rem; box-shadow: 0 14px 40px rgba(27, 35, 48, 0.25); }
-  .abs-pop__head { color: var(--ctp-text); font-family: $s-serif; font-weight: 700; background: var(--ctp-crust); }
-  .abs-pop__cmd { display: none; }
-  .abs-pop__label { display: inline; }
-  .abs-pop__hint { font-family: $s-sans; font-weight: 400; color: var(--ctp-overlay); }
-  .pub__abstract { border-left-color: var(--ctp-blue); font-family: $s-sans; }
-  .pub__abs-btn { font-family: $s-sans; }
-
   .page__footer { background: #d3d9e0; border-top-color: var(--ctp-surface1); }
 }
 

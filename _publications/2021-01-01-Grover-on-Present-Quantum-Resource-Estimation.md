@@ -10,6 +10,9 @@ venue: "Cryptology ePrint Archive"
 venue_short: "ePrint 2021"
 eprint: "https://eprint.iacr.org/2021/1655"
 citation: "Mostafizar Rahman, Goutam Paul. Grover on Present: Quantum Resource Estimation. Cryptology ePrint Archive, 2021."
+highlights:
+  - "Reversible quantum circuits for PRESENT built with several Toffoli-gate decompositions."
+  - "Grover oracles compared under several cost metrics, with gate costs estimated under NIST’s depth limits."
 abstract: "In this work, we present cost analysis for mounting Grover's key search on Present block cipher. Reversible quantum circuits for Present are designed taking into consideration several decompositions of toffoli gate. This designs are then used to produce Grover oracle for Present and their implementations cost is compared using several metrics. Resource estimation for Grover's search is conducted by employing these Grover oracles. Finally, gate cost for these designs are estimated considering NIST's depth restrictions."
 ---
 

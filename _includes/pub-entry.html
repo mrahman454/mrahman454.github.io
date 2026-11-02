@@ -1,5 +1,5 @@
 {% assign p = include.pub %}
-<li class="pub{% if p.abstract %} has-abstract{% endif %}" data-type="{{ p.pubtype }}" data-area="{{ p.area | slugify }}">
+<li class="pub{% if p.abstract or p.highlights %} has-abstract{% endif %}" data-type="{{ p.pubtype }}" data-area="{{ p.area | slugify }}" data-area-name="{{ p.area | escape }}" data-venue="{{ p.venue_short | escape }}"{% if p.award %} data-award="1"{% endif %}>
   <span class="acad-tag acad-tag--venue">{{ p.venue_short }}</span>
   {% if p.pubtype == "journal" %}<span class="acad-tag">Journal</span>{% elsif p.pubtype == "conference" %}<span class="acad-tag">Conference</span>{% elsif p.pubtype == "preprint" %}<span class="acad-tag">Preprint</span>{% endif %}
   {% if p.award %}<span class="acad-tag acad-tag--award">&#9733; Award</span>{% endif %}
@@ -14,5 +14,6 @@
     {% if p.eprint %}<a href="{{ p.eprint }}" target="_blank" rel="noopener"><i class="fas fa-fw fa-file-lines" aria-hidden="true"></i> ePrint</a>{% endif %}
     <a href="https://scholar.google.com/scholar?q={{ p.title | url_encode }}" target="_blank" rel="noopener"><i class="fas fa-fw fa-magnifying-glass" aria-hidden="true"></i> Scholar</a>
   </div>
+  {% if p.highlights %}<ul class="pub__highlights" hidden>{% for h in p.highlights %}<li>{{ h | escape }}</li>{% endfor %}</ul>{% endif %}
   {% if p.abstract %}<div class="pub__abstract" hidden>{{ p.abstract | escape }}</div>{% endif %}
 </li>

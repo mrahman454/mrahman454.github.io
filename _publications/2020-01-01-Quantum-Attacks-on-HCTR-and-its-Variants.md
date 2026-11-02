@@ -12,7 +12,10 @@ details: "vol. 1, pp. 1–8"
 doi: "10.1109/TQE.2020.3041426"
 eprint: "https://eprint.iacr.org/2020/802"
 citation: "Mostafizar Rahman, Goutam Paul. Quantum Attacks on HCTR and its Variants. IEEE Transactions on Quantum Engineering, vol. 1, pp. 1–8, 2020."
-abstract: "Recently, in Asiacrypt 2019, Bonnetainet al.have shown attacks by quantum adversaries on FX construction and Even-Mansour Cipher without using superposition queries to the encryption oracle. In this article, we use a similar approach to mount new attacks on Hash-Counter (HCTR) and Hash-Counter-Hash (HCH) constructions. In addition, we mount attacks on HCTR, tweakable-HCTR, and HCH using the superposition queries to the encryption oracle using strategies proposed by Leander and May in Asiacrypt 2017 and Kaplanet al.in Crypto 2016."
+highlights:
+  - "Quantum attacks on the HCTR and HCH constructions without superposition queries to the encryption oracle."
+  - "Further attacks on HCTR, tweakable HCTR and HCH that do use superposition queries."
+abstract: "Recently, in Asiacrypt 2019, Bonnetain et al. have shown attacks by quantum adversaries on FX construction and Even-Mansour Cipher without using superposition queries to the encryption oracle. In this article, we use a similar approach to mount new attacks on Hash-Counter (HCTR) and Hash-Counter-Hash (HCH) constructions. In addition, we mount attacks on HCTR, tweakable-HCTR, and HCH using the superposition queries to the encryption oracle using strategies proposed by Leander and May in Asiacrypt 2017 and Kaplan et al. in Crypto 2016."
 ---
 
 **Authors:** Mostafizar Rahman, Goutam Paul
