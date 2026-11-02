@@ -19,6 +19,11 @@ What gets added
     _data/publication_ignore.yml.
   * A News item is added only for IACR venues or the top-4 security conferences,
     and only for papers from this year or last year.
+
+Abstracts (shown when hovering a paper on the website)
+  * Filled in for any paper that has none yet, from OpenAlex, then Semantic Scholar,
+    then the IACR ePrint metadata feed (OAI-PMH, CC0) when the paper has an `eprint:` link.
+  * To add or fix one by hand, put  abstract: "..."  in the paper's front matter.
 """
 import datetime
 import glob
@@ -27,6 +32,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.parse
 import urllib.request
 
@@ -104,6 +110,85 @@ def norm_doi(d):
 def clean(text):
     text = re.sub(r"<[^>]+>", "", text or "")
     return re.sub(r"\s+", " ", html.unescape(text)).strip()
+
+
+def openalex_abstract(inv):
+    """OpenAlex stores abstracts as {word: [positions]}; rebuild the text."""
+    if not inv:
+        return ""
+    pos = {}
+    for word, idxs in inv.items():
+        for i in idxs:
+            pos[i] = word
+    text = " ".join(pos[i] for i in sorted(pos))
+    return re.sub(r"^(abstract|summary)[\s.:]+", "", clean(text), flags=re.I)
+
+
+def tidy_abstract(text):
+    """Remove LaTeX preambles some sources wrap around formulas; keep the formula."""
+    text = re.sub(r"\\documentclass.*?\\begin\{document\}(.*?)\\end\{document\}", r"\1", text, flags=re.S)
+    text = re.sub(r"\$\$(.+?)\$\$", r"$\1$", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def fetch_abstract(doi, eprint_url):
+    """Try OpenAlex, Semantic Scholar, then IACR ePrint. Returns '' if none found."""
+    if doi:
+        try:
+            w = get_json("https://api.openalex.org/works/doi:" + urllib.parse.quote(doi))
+            text = openalex_abstract(w.get("abstract_inverted_index"))
+            if len(text) > 80:
+                return text
+        except Exception:
+            pass
+        try:
+            w = get_json("https://api.semanticscholar.org/graph/v1/paper/DOI:"
+                         + urllib.parse.quote(doi) + "?fields=abstract")
+            text = clean(w.get("abstract") or "")
+            if len(text) > 80:
+                return text
+        except Exception:
+            pass  # rate limits are common here; the next run will try again
+    m = re.search(r"eprint\.iacr\.org/(\d{4}/\d+)", eprint_url or "")
+    if m:
+        try:
+            url = ("https://eprint.iacr.org/oai?verb=GetRecord&metadataPrefix=oai_dc"
+                   "&identifier=oai:eprint.iacr.org:" + m.group(1))
+            req = urllib.request.Request(url, headers={"User-Agent": UA})
+            xml = urllib.request.urlopen(req, timeout=60).read().decode("utf-8", "replace")
+            d = re.search(r"<dc:description>(.*?)</dc:description>", xml, re.S)
+            text = clean(d.group(1)) if d else ""
+            if len(text) > 80:
+                return text
+        except Exception:
+            pass
+    return ""
+
+
+def fill_missing_abstracts(dry):
+    """Add `abstract:` to publication files that do not have one yet."""
+    added = 0
+    for path in sorted(glob.glob(os.path.join(PUB_DIR, "*.md"))):
+        text = open(path, encoding="utf-8").read()
+        front = text.split("---", 2)[1] if text.startswith("---") else ""
+        if re.search(r"^abstract:", front, re.M):
+            continue
+        doi = re.search(r'^doi:\s*"?([^"\n]+)"?', front, re.M)
+        ep = re.search(r'^eprint:\s*"?([^"\n]+)"?', front, re.M)
+        abstract = tidy_abstract(fetch_abstract(norm_doi(doi.group(1)) if doi else "", ep.group(1) if ep else ""))
+        time.sleep(1)  # be gentle with the free APIs
+        if not abstract:
+            continue
+        added += 1
+        print("  abstract for", os.path.basename(path))
+        if dry:
+            continue
+        # append the abstract as the last front-matter line
+        body = text.split("---", 2)[2]
+        text = "---" + front.rstrip("\n") + "\n" + f"abstract: {yaml_str(abstract)}\n" + "---" + body
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(text)
+    print(f"Abstracts added: {added}")
 
 
 def yaml_str(s):
@@ -229,7 +314,10 @@ def write_publication(e):
     ]
     if e["details"]:
         lines.append(f'details: {yaml_str(e["details"])}')
-    lines += [f'doi: {yaml_str(e["doi"])}', f"citation: {yaml_str(cit)}", "added_automatically: true", "---", ""]
+    lines.append(f'doi: {yaml_str(e["doi"])}')
+    if e.get("abstract"):
+        lines.append(f'abstract: {yaml_str(e["abstract"])}')
+    lines += [f"citation: {yaml_str(cit)}", "added_automatically: true", "---", ""]
     body = (f'**Authors:** {e["authors"]}\n\n**Published in:** {e["venue"]}'
             + (f', {e["details"]}' if e["details"] else "") + f', {e["year"]}.\n\n'
             + f'**DOI:** [{e["doi"]}](https://doi.org/{e["doi"]})\n')
@@ -282,10 +370,12 @@ def main():
         if norm_title(entry["title"]) in known_titles:
             continue
         known_titles.add(norm_title(entry["title"]))
+        entry["abstract"] = tidy_abstract(openalex_abstract(w.get("abstract_inverted_index")))
         new.append(entry)
 
     if not new:
         print("No new publications.")
+        fill_missing_abstracts(dry)
         return
 
     this_year = datetime.date.today().year
@@ -300,6 +390,7 @@ def main():
     if newsworthy:
         add_news(newsworthy)
         print(f"  added {len(newsworthy)} news item(s)")
+    fill_missing_abstracts(dry)
 
 
 if __name__ == "__main__":

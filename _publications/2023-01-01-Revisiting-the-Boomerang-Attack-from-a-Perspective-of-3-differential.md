@@ -10,7 +10,9 @@ venue: "IEEE Transactions on Information Theory"
 venue_short: "IEEE TIT 2024"
 details: "vol. 70, issue 7, pp. 5343–5357"
 doi: "10.1109/TIT.2023.3324738"
+eprint: "https://eprint.iacr.org/2023/1689"
 citation: "Libo Wang, Ling Song, Baofeng Wu, Mostafizar Rahman, Takanori Isobe. Revisiting the Boomerang Attack From a Perspective of 3-Differential. IEEE Transactions on Information Theory, vol. 70, issue 7, pp. 5343–5357, 2024."
+abstract: "In this paper, inspired by the work of Beyne and Rijmen at CRYPTO 2022, we explore the accurate probability ofd-differential in the fixed-key model. The theoretical foundations of our method are based on a special matrix - quasi-d-differential transition matrix, which is a natural extension of the quasidifferential transition matrix. The role of quasi-d-differential transition matrices in polytopic cryptananlysis is analogous to that of correlation matrices in linear cryptanalysis. Therefore, the fixed-key probability of ad-differential can be exactly expressed as the sum of the correlations of its quasi-d-differential trails. Then we revisit the boomerang attack from a perspective of 3-differential. Different from previous works, the probability of a boomerang distinguisher can be exactly expressed as the sum of the correlations of its quasi-3-differential trails without any assumptions in our work. In order to illustrate our theory, we apply it to the lightweight block cipher GIFT. It is interesting to find the probability of every optimal 3-differential characteristic of an existing 2-round boomerang is zero, which can be seen as an evidence that the security of block ciphers adopting half-round key XOR might be overestimated previously to some extent in differential-like attacks."
 ---
 
 **Authors:** Libo Wang, Ling Song, Baofeng Wu, Mostafizar Rahman, Takanori Isobe
