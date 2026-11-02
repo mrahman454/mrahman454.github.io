@@ -25,7 +25,7 @@ author:
   avatar           : "avatar-mr.svg" # replace with your photo, e.g. "profile.jpg" in /images/
   name             : "Mostafizar Rahman"
   pronouns         : # example: "she/her"  
-  bio              : "Research Fellow, NTU Singapore. Symmetric-key cryptography: design, cryptanalysis & quantum cryptanalysis."
+  bio              : "Research Fellow, SyLLab, NTU Singapore. Symmetric-key cryptography: design, cryptanalysis & quantum cryptanalysis."
   location         : "Singapore"
   employer         : "Nanyang Technological University"
   uri              : # URL

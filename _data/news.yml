@@ -1,0 +1,30 @@
+# News shown on the home page, newest first. The 7 newest are shown.
+#
+#   date:  "YYYY-MM" or "YYYY"
+#   text:  HTML is allowed (links, <span class="hl">highlight</span>)
+#   award: true   -> shows a star and gold highlight (optional)
+#
+# The scheduled job (.github/workflows/update-publications.yml) adds entries
+# here automatically for new papers at IACR venues or top security conferences.
+
+- date: "2026-07"
+  text: "Research visit to Prof. Takanori Isobe, The University of Osaka: design of a post-quantum wide block cipher."
+
+- date: "2025-12"
+  text: "Invited talks at the Crypto Winter School 2025 and the National Workshop on Cryptology, IIT Bhilai."
+
+- date: "2025-10"
+  text: "Joined <a href=\"https://syllab-ntu.github.io/syllab/members/\">SyLLab</a> at <span class=\"hl\">Nanyang Technological University</span>, Singapore as a Research Fellow, hosted by <a href=\"https://thomaspeyrin.github.io/web/\">Prof. Thomas Peyrin</a>."
+
+- date: "2025"
+  award: true
+  text: "AETHER received the <span class=\"hl-y\">Excellent Paper Award</span> at the Computer Security Symposium 2025."
+
+- date: "2025"
+  text: "Dialga in IACR ToSC; MSX and SHA instructions for AES-based schemes in IACR CiC; Twinkle cryptanalysis at SAC 2025."
+
+- date: "2025"
+  text: "Joined the editorial board of IACR Communications in Cryptology."
+
+- date: "2025-05"
+  text: "Joined Kyoto University as a Program-Specific Researcher."

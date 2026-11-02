@@ -30,7 +30,7 @@ redirect_from:
 
 ## Research experience
 
-<div class="cv-entry"><div class="cv-entry__main"><span class="cv-entry__role">Research Fellow</span><span class="cv-entry__org">Nanyang Technological University, Singapore</span></div><span class="cv-entry__date">Oct 2025 – Present</span></div>
+<div class="cv-entry"><div class="cv-entry__main"><span class="cv-entry__role">Research Fellow</span><span class="cv-entry__org"><a href="https://syllab-ntu.github.io/syllab/members/">SyLLab</a>, Nanyang Technological University, Singapore (host: <a href="https://thomaspeyrin.github.io/web/">Prof. Thomas Peyrin</a>)</span></div><span class="cv-entry__date">Oct 2025 – Present</span></div>
 <div class="cv-entry"><div class="cv-entry__main"><span class="cv-entry__role">Program-Specific Researcher</span><span class="cv-entry__org">Kyoto University, Japan</span></div><span class="cv-entry__date">May 2025 – Sep 2025</span></div>
 <div class="cv-entry"><div class="cv-entry__main"><span class="cv-entry__role">Postdoctoral Researcher</span><span class="cv-entry__org">University of Hyogo, Japan</span></div><span class="cv-entry__date">Feb 2023 – Mar 2025</span></div>
 <div class="cv-entry"><div class="cv-entry__main"><span class="cv-entry__role">Visiting Scientist</span><span class="cv-entry__org">R. C. Bose Centre for Cryptology and Security, Indian Statistical Institute, Kolkata</span></div><span class="cv-entry__date">Sep 2022 – Jan 2023</span></div>

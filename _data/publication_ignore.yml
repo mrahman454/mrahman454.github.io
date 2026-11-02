@@ -1,0 +1,5 @@
+# DOIs the automatic publication update should never add to the website.
+# Add one line per DOI, for example:
+#   - "10.1234/example.5678"
+# (The updater already skips works where Crossref does not list Mostafizar Rahman
+#  as an author, preprints, books and anything without a DOI.)

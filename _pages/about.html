@@ -22,7 +22,8 @@ redirect_from:
     <div class="t-cmd reveal"><span class="t-p">$</span> whoami</div>
     <h1 class="t-name reveal">Mostafizar <span>Rahman</span></h1>
     <div class="t-out reveal" style="--d:100ms">
-      <p>Research Fellow<span class="at"> @ </span><span class="s-sep">, </span><a href="https://www.ntu.edu.sg/"><span class="f-inline">NTU Singapore</span><span class="s-inline">Nanyang Technological University, Singapore</span></a></p>
+      <p>Research Fellow<span class="at"> @ </span><span class="s-sep">, </span><a href="https://syllab-ntu.github.io/syllab/members/">SyLLab</a>, <a href="https://www.ntu.edu.sg/"><span class="f-inline">NTU Singapore</span><span class="s-inline">Nanyang Technological University, Singapore</span></a></p>
+      <p>Hosted by <a href="https://thomaspeyrin.github.io/web/">Prof. Thomas Peyrin</a></p>
       <p>Ph.D.<span class="at"> @ </span><span class="s-sep">, </span><a href="https://www.isical.ac.in/"><span class="f-inline">ISI Kolkata</span><span class="s-inline">Indian Statistical Institute, Kolkata</span></a></p>
     </div>
 
@@ -72,7 +73,7 @@ redirect_from:
   <div class="t-cmd"><span class="t-p">$</span> cat about.txt</div>
   <h2 class="s-title">About</h2>
   <div class="t-text">
-    <p>I am a Research Fellow at <span class="hl">Nanyang Technological University (NTU), Singapore</span>, working on symmetric-key cryptography. Before NTU, I was a Program-Specific Researcher at <span class="hl">Kyoto University</span> and a postdoctoral researcher at the <span class="hl">University of Hyogo</span>, Japan. I received my Ph.D. in Computer Science from the <span class="hl">Indian Statistical Institute, Kolkata</span>, with a thesis on cryptanalysis of symmetric-key schemes using classical and quantum techniques.</p>
+    <p>I am a Research Fellow in the <a href="https://syllab-ntu.github.io/syllab/members/">SyLLab</a> (Symmetric cryptography and machine Learning Lab) at <span class="hl">Nanyang Technological University (NTU), Singapore</span>, hosted by <a href="https://thomaspeyrin.github.io/web/">Prof. Thomas Peyrin</a>. I work on symmetric-key cryptography. Before NTU, I was a Program-Specific Researcher at <span class="hl">Kyoto University</span> and a postdoctoral researcher at the <span class="hl">University of Hyogo</span>, Japan. I received my Ph.D. in Computer Science from the <span class="hl">Indian Statistical Institute, Kolkata</span>, with a thesis on cryptanalysis of symmetric-key schemes using classical and quantum techniques.</p>
     <p>I design ciphers (low-latency, high-throughput and post-quantum), break them (yoyo, boomerang, differential, division-property and fault attacks, often with MILP/SAT tools), study them against quantum adversaries, and look at how they behave inside real-world protocols, such as key commitment in AEAD.</p>
   </div>
 </section>
@@ -96,13 +97,9 @@ redirect_from:
   <div class="t-cmd"><span class="t-p">$</span> tail -n 7 news.log</div>
   <h2 class="s-title">News</h2>
   <ul class="t-log">
-    <li><span class="t-date"><span class="br">[</span>2026-07<span class="br">]</span></span> Research visit to Prof. Takanori Isobe, The University of Osaka: design of a post-quantum wide block cipher.</li>
-    <li><span class="t-date"><span class="br">[</span>2025-12<span class="br">]</span></span> Invited talks at the Crypto Winter School 2025 and the National Workshop on Cryptology, IIT Bhilai.</li>
-    <li><span class="t-date"><span class="br">[</span>2025-10<span class="br">]</span></span> Joined <span class="hl">Nanyang Technological University</span>, Singapore as a Research Fellow.</li>
-    <li class="t-log--award"><span class="t-date"><span class="br">[</span>2025<span class="br">]</span></span> <span class="t-star">&#9733;</span> AETHER received the <span class="hl-y">Excellent Paper Award</span> at the Computer Security Symposium 2025.</li>
-    <li><span class="t-date"><span class="br">[</span>2025<span class="br">]</span></span> Dialga in IACR ToSC; MSX and SHA instructions for AES-based schemes in IACR CiC; Twinkle cryptanalysis at SAC 2025.</li>
-    <li><span class="t-date"><span class="br">[</span>2025<span class="br">]</span></span> Joined the editorial board of IACR Communications in Cryptology.</li>
-    <li><span class="t-date"><span class="br">[</span>2025-05<span class="br">]</span></span> Joined Kyoto University as a Program-Specific Researcher.</li>
+    {% for n in site.data.news limit: 7 %}
+    <li{% if n.award %} class="t-log--award"{% endif %}><span class="t-date"><span class="br">[</span>{{ n.date }}<span class="br">]</span></span> {% if n.award %}<span class="t-star">&#9733;</span> {% endif %}{{ n.text }}</li>
+    {% endfor %}
   </ul>
 </section>
 
