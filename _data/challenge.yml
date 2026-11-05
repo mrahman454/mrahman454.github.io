@@ -1,0 +1,18 @@
+# Public data for the TOY-FEISTEL challenge (/challenge/).
+# The keys are NOT stored anywhere on the site: answers are checked by re-encrypting these plaintexts.
+
+level1:
+  rounds: 2
+  pairs:
+    - plaintext: "24D13340"
+      ciphertext: "A3810A97"
+
+level2:
+  rounds: 3
+  pairs:
+    - plaintext: "FDF19870"
+      ciphertext: "43ADEB42"
+    - plaintext: "D4AB1877"
+      ciphertext: "A8879ED5"
+    - plaintext: "4E16BDF7"
+      ciphertext: "A445CECF"

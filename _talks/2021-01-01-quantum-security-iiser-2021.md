@@ -5,6 +5,8 @@ type: "Invited talk"
 permalink: /talks/2021-01-01-quantum-security-iiser-2021
 venue: "Summer School on Quantum Information and Quantum Technology 2021, IISER Kolkata"
 location: "Kolkata, India"
+lat: 22.5726
+lng: 88.3639
 date: 2021-07-02
 ---
 

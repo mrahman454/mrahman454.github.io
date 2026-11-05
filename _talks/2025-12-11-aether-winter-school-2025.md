@@ -5,6 +5,8 @@ type: "Invited talk"
 permalink: /talks/2025-12-11-aether-winter-school-2025
 venue: "Crypto Winter School 2025, IIT Bhilai"
 location: "Bhilai, India"
+lat: 21.2092
+lng: 81.4285
 date: 2025-12-11
 ---
 

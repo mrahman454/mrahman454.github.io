@@ -6,12 +6,14 @@ permalink: /coauthors/
 
 {% include base_path %}
 {% assign ca = site.data.coauthors %}
+{% assign cm = site.data.collab_map %}
 
 <div class="acad">
 
 <div class="net-toggle" role="tablist" aria-label="Network type">
   <button type="button" role="tab" class="net-toggle__btn is-active" data-net="authors" aria-selected="true"><i class="fas fa-user-group" aria-hidden="true"></i> Authors</button>
   <button type="button" role="tab" class="net-toggle__btn" data-net="institutions" aria-selected="false"><i class="fas fa-building-columns" aria-hidden="true"></i> Institutions</button>
+  <button type="button" role="tab" class="net-toggle__btn" data-net="map" aria-selected="false"><i class="fas fa-earth-asia" aria-hidden="true"></i> Map</button>
 </div>
 
 <p class="pub-stats net-only" data-net="authors">
@@ -24,7 +26,25 @@ permalink: /coauthors/
   Affiliation data: <a href="https://openalex.org/">OpenAlex</a>.
 </p>
 
-<div class="canv-frame">
+<p class="pub-stats net-only" data-net="map" hidden>
+  <strong>Where my co-authors and I work:</strong> {{ cm.countries.size }} countries and {{ cm.points.size }} institutions, from the affiliations on my papers.
+  Darker countries have more joint papers; dots are institutions (bigger = more papers, highlighted = mine). Hover over a country or dot for details.
+</p>
+
+<div class="map-frame net-only map-wrap" data-net="map" hidden>
+  <div class="canv-frame__bar">
+    <span class="tl-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="canv-frame__title">~/collaborations --map</span>
+    <span class="canv-frame__label">Collaboration map</span>
+  </div>
+  <div class="map-frame__body">
+    {% include world-map.svg %}
+  </div>
+  <div class="map-legend"><span><i style="background:var(--map-mine, #f38ba8)"></i>my institutions</span><span><i style="background:var(--map-dot, #89dceb)"></i>co-authors&rsquo; institutions</span><span>darker country = more joint papers</span></div>
+  <script type="application/json" class="map-data">{"countries": {{ cm.countries | jsonify }}, "points": {{ cm.points | jsonify }}}</script>
+</div>
+
+<div class="canv-frame net-only" data-net="authors institutions">
   <div class="canv-frame__bar">
     <span class="tl-dots" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="canv-frame__title" id="canv-title">~/coauthors &mdash; canv</span>
@@ -34,7 +54,7 @@ permalink: /coauthors/
   <iframe id="canv-frame" src="{{ base_path }}/assets/canv/coauthors.html?v={{ site.time | date: '%s' }}" title="Interactive network" loading="lazy"></iframe>
 </div>
 
-<p class="canv-credit">
+<p class="canv-credit net-only" data-net="authors institutions">
   Made with <a href="https://github.com/Xovee/canv">CANV</a> by Xovee Xu, built on <a href="https://github.com/dblarremore/webweb">webweb</a> (both GPL-3.0).
   Both networks are generated from the publication list on this site and update automatically when new papers are added.
 </p>
@@ -46,6 +66,16 @@ permalink: /coauthors/
   <li><span class="coauthor-list__name">{{ p.name }}</span> <span class="coauthor-list__n">{{ p.papers }} papers</span></li>
   {% endif %}{% endfor %}
 </ul>
+</div>
+
+<div class="net-only" data-net="map" hidden>
+<h2>Countries</h2>
+<ul class="coauthor-list">
+  {% for c in cm.countries %}
+  <li><span class="coauthor-list__name">{{ c.name }} <span class="coauthor-list__cc">{{ c.institutions }} institution{% if c.institutions != 1 %}s{% endif %}</span></span> <span class="coauthor-list__n">{{ c.papers }} paper{% if c.papers != 1 %}s{% endif %}</span></li>
+  {% endfor %}
+</ul>
+<p class="canv-credit">Map outlines: <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain). Institution locations: <a href="https://openalex.org/">OpenAlex</a>.</p>
 </div>
 
 <div class="net-only" data-net="institutions" hidden>
@@ -83,24 +113,28 @@ permalink: /coauthors/
   /* Authors / Institutions toggle */
   var current = 'authors';
   function show(net, push) {
-    if (!NETS[net]) net = 'authors';
+    if (!NETS[net] && net !== 'map') net = 'authors';
     var n = NETS[net];
     document.querySelectorAll('.net-toggle__btn').forEach(function (b) {
       var on = b.getAttribute('data-net') === net;
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-selected', on ? 'true' : 'false');
     });
-    document.querySelectorAll('.net-only').forEach(function (el) { el.hidden = el.getAttribute('data-net') !== net; });
-    document.getElementById('canv-title').textContent = n.title;
-    document.getElementById('canv-label').textContent = n.label;
-    document.getElementById('canv-open').href = base + n.file;
-    if (net !== current) { f.src = base + n.file + '?v=' + version; current = net; }
-    if (push) { try { history.replaceState(null, '', net === 'authors' ? location.pathname : '#institutions'); } catch (e) {} }
+    document.querySelectorAll('.net-only').forEach(function (el) {
+      el.hidden = el.getAttribute('data-net').split(' ').indexOf(net) < 0;
+    });
+    if (n) {
+      document.getElementById('canv-title').textContent = n.title;
+      document.getElementById('canv-label').textContent = n.label;
+      document.getElementById('canv-open').href = base + n.file;
+      if (net !== current) { f.src = base + n.file + '?v=' + version; current = net; }
+    }
+    if (push) { try { history.replaceState(null, '', net === 'authors' ? location.pathname : '#' + net); } catch (e) {} }
   }
   document.querySelectorAll('.net-toggle__btn').forEach(function (b) {
     b.addEventListener('click', function () { show(b.getAttribute('data-net'), true); });
   });
-  if (location.hash === '#institutions') show('institutions', false);
+  if (location.hash === '#institutions' || location.hash === '#map') show(location.hash.slice(1), false);
 
   /* Redraw the network in the new colours when the serious/fun switch is used */
   document.addEventListener('modechange', function () {
@@ -108,3 +142,4 @@ permalink: /coauthors/
   });
 })();
 </script>
+<script src="{{ base_path }}/assets/js/maps.js?v={{ site.time | date: '%s' }}" defer></script>

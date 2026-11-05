@@ -31,14 +31,14 @@ jobs:
       - name: Commit and push if anything changed
         id: commit
         run: |
-          if [ -z "$(git status --porcelain -- _publications _data/news.yml _data/coauthors.json _data/affiliations.json assets/canv)" ]; then
+          if [ -z "$(git status --porcelain -- _publications _data/news.yml _data/coauthors.json _data/affiliations.json _data/institution_geo.json _data/collab_map.json assets/canv)" ]; then
             echo "No new publications."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add _publications _data/news.yml _data/coauthors.json _data/affiliations.json assets/canv
+          git add _publications _data/news.yml _data/coauthors.json _data/affiliations.json _data/institution_geo.json _data/collab_map.json assets/canv
           git commit -m "Add new publications (automatic update)"
           git push
           echo "changed=true" >> "$GITHUB_OUTPUT"

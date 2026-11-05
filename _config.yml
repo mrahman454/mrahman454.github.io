@@ -149,6 +149,15 @@ social:
   links: # An array of links to social media profiles
 
 
+# Visitor statistics with GoatCounter (privacy-friendly, no cookies).
+# 1. Create a free account at https://www.goatcounter.com/signup and pick a code, e.g. "mrahman454".
+# 2. Put that code below. Statistics are then at https://<code>.goatcounter.com
+# 3. Optional: to show a public "N visits" line in the footer, turn on
+#    Settings -> "Allow adding visitor counts on your website" in GoatCounter and set the flag below.
+goatcounter:
+  code               : ""      # e.g. "mrahman454"; empty = statistics off
+  show_visits        : false   # true = footer shows the total number of visits
+
 # Analytics
 analytics:
   provider               :  "false" # false (default), "google", "google-universal", "google-analytics-4", "custom"

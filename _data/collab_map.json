@@ -1,0 +1,434 @@
+{
+ "countries": [
+  {
+   "code": "JP",
+   "id": "392",
+   "name": "Japan",
+   "papers": 18,
+   "institutions": 11,
+   "label": "18 papers · 11 institutions"
+  },
+  {
+   "code": "IN",
+   "id": "356",
+   "name": "India",
+   "papers": 16,
+   "institutions": 8,
+   "label": "16 papers · 8 institutions"
+  },
+  {
+   "code": "CH",
+   "id": "756",
+   "name": "Switzerland",
+   "papers": 5,
+   "institutions": 3,
+   "label": "5 papers · 3 institutions"
+  },
+  {
+   "code": "DE",
+   "id": "276",
+   "name": "Germany",
+   "papers": 2,
+   "institutions": 2,
+   "label": "2 papers · 2 institutions"
+  },
+  {
+   "code": "IL",
+   "id": "376",
+   "name": "Israel",
+   "papers": 2,
+   "institutions": 1,
+   "label": "2 papers · 1 institution"
+  },
+  {
+   "code": "AT",
+   "id": "040",
+   "name": "Austria",
+   "papers": 1,
+   "institutions": 1,
+   "label": "1 paper · 1 institution"
+  },
+  {
+   "code": "CN",
+   "id": "156",
+   "name": "China",
+   "papers": 1,
+   "institutions": 4,
+   "label": "1 paper · 4 institutions"
+  },
+  {
+   "code": "FR",
+   "id": "250",
+   "name": "France",
+   "papers": 1,
+   "institutions": 1,
+   "label": "1 paper · 1 institution"
+  },
+  {
+   "code": "SG",
+   "id": "702",
+   "name": "Singapore",
+   "papers": 1,
+   "institutions": 1,
+   "label": "1 paper · 1 institution"
+  }
+ ],
+ "points": [
+  {
+   "title": "University of Hyogo",
+   "lines": [
+    "Kobe, Japan",
+    "16 papers",
+    "my institution"
+   ],
+   "size": 16,
+   "mine": true,
+   "lat": 34.6913,
+   "lng": 135.183
+  },
+  {
+   "title": "Indian Statistical Institute",
+   "lines": [
+    "Kolkata, India",
+    "13 papers",
+    "my institution"
+   ],
+   "size": 13,
+   "mine": true,
+   "lat": 22.5626,
+   "lng": 88.363
+  },
+  {
+   "title": "Kyoto University",
+   "lines": [
+    "Kyoto, Japan",
+    "4 papers",
+    "my institution"
+   ],
+   "size": 4,
+   "mine": true,
+   "lat": 35.0211,
+   "lng": 135.7538
+  },
+  {
+   "title": "Nanyang Technological University",
+   "lines": [
+    "Singapore, Singapore",
+    "1 paper",
+    "my institution"
+   ],
+   "size": 1,
+   "mine": true,
+   "lat": 1.2897,
+   "lng": 103.8501
+  },
+  {
+   "title": "IIT Bhilai",
+   "lines": [
+    "Bhilai, India",
+    "9 papers"
+   ],
+   "size": 9,
+   "mine": false,
+   "lat": 21.2092,
+   "lng": 81.4285
+  },
+  {
+   "title": "Mitsubishi Electric",
+   "lines": [
+    "Tokyo, Japan",
+    "5 papers"
+   ],
+   "size": 5,
+   "mine": false,
+   "lat": 35.6895,
+   "lng": 139.6917
+  },
+  {
+   "title": "Università della Svizzera italiana",
+   "lines": [
+    "Lugano, Switzerland",
+    "4 papers"
+   ],
+   "size": 4,
+   "mine": false,
+   "lat": 46.0101,
+   "lng": 8.96
+  },
+  {
+   "title": "IIT Madras",
+   "lines": [
+    "Chennai, India",
+    "3 papers"
+   ],
+   "size": 3,
+   "mine": false,
+   "lat": 13.0878,
+   "lng": 80.2785
+  },
+  {
+   "title": "NEC",
+   "lines": [
+    "Tokyo, Japan",
+    "3 papers"
+   ],
+   "size": 3,
+   "mine": false,
+   "lat": 35.6895,
+   "lng": 139.6917
+  },
+  {
+   "title": "The University of Osaka",
+   "lines": [
+    "Osaka, Japan",
+    "3 papers"
+   ],
+   "size": 3,
+   "mine": false,
+   "lat": 34.6938,
+   "lng": 135.5011
+  },
+  {
+   "title": "EPFL",
+   "lines": [
+    "Lausanne, Switzerland",
+    "2 papers"
+   ],
+   "size": 2,
+   "mine": false,
+   "lat": 46.516,
+   "lng": 6.6328
+  },
+  {
+   "title": "NICT",
+   "lines": [
+    "Tokyo, Japan",
+    "2 papers"
+   ],
+   "size": 2,
+   "mine": false,
+   "lat": 35.6895,
+   "lng": 139.6917
+  },
+  {
+   "title": "NTT",
+   "lines": [
+    "Tokyo, Japan",
+    "2 papers"
+   ],
+   "size": 2,
+   "mine": false,
+   "lat": 35.6895,
+   "lng": 139.7534
+  },
+  {
+   "title": "University of Haifa",
+   "lines": [
+    "Haifa, Israel",
+    "2 papers"
+   ],
+   "size": 2,
+   "mine": false,
+   "lat": 32.813,
+   "lng": 34.9993
+  },
+  {
+   "title": "Bauhaus-Universität Weimar",
+   "lines": [
+    "Weimar, Germany",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 50.9803,
+   "lng": 11.329
+  },
+  {
+   "title": "FHNW",
+   "lines": [
+    "Windisch, Switzerland",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 47.479,
+   "lng": 8.2184
+  },
+  {
+   "title": "Graz University of Technology",
+   "lines": [
+    "Graz, Austria",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 47.0673,
+   "lng": 15.442
+  },
+  {
+   "title": "Hainan University",
+   "lines": [
+    "Haikou, China",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 20.0342,
+   "lng": 110.3465
+  },
+  {
+   "title": "IIIT Delhi",
+   "lines": [
+    "Delhi, India",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 28.6519,
+   "lng": 77.2315
+  },
+  {
+   "title": "IIT Kharagpur",
+   "lines": [
+    "Kharagpur, India",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 22.3397,
+   "lng": 87.325
+  },
+  {
+   "title": "IRISA / Université de Rennes",
+   "lines": [
+    "Rennes, France",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 48.1111,
+   "lng": -1.6743
+  },
+  {
+   "title": "Institute of Information Engineering, CAS",
+   "lines": [
+    "Beijing, China",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 39.9075,
+   "lng": 116.3972
+  },
+  {
+   "title": "Jinan University",
+   "lines": [
+    "Guangzhou, China",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 23.1167,
+   "lng": 113.25
+  },
+  {
+   "title": "NEC Solution Innovators",
+   "lines": [
+    "Tokyo, Japan",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 35.6895,
+   "lng": 139.6917
+  },
+  {
+   "title": "Nagoya University",
+   "lines": [
+    "Nagoya, Japan",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 35.1815,
+   "lng": 136.9064
+  },
+  {
+   "title": "Presidency University",
+   "lines": [
+    "Kolkata, India",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 22.5626,
+   "lng": 88.363
+  },
+  {
+   "title": "Ruhr University Bochum",
+   "lines": [
+    "Bochum, Germany",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 51.4817,
+   "lng": 7.2165
+  },
+  {
+   "title": "Siksha O Anusandhan University",
+   "lines": [
+    "Bhubaneswar, India",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 20.2724,
+   "lng": 85.8338
+  },
+  {
+   "title": "Tokyo Institute of Technology",
+   "lines": [
+    "Tokyo, Japan",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 35.6895,
+   "lng": 139.6917
+  },
+  {
+   "title": "University of Calcutta",
+   "lines": [
+    "Kolkata, India",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 22.5626,
+   "lng": 88.363
+  },
+  {
+   "title": "University of Chinese Academy of Sciences",
+   "lines": [
+    "Beijing, China",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 39.9075,
+   "lng": 116.3972
+  },
+  {
+   "title": "Yokohama National University",
+   "lines": [
+    "Yokohama, Japan",
+    "1 paper"
+   ],
+   "size": 1,
+   "mine": false,
+   "lat": 35.4333,
+   "lng": 139.65
+  }
+ ]
+}

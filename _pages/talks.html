@@ -10,6 +10,26 @@ author_profile: true
 {% assign talks = site.talks | sort: "date" | reverse %}
 
 <div class="acad">
+
+{% comment %} Map: one dot per city, sized by number of talks {% endcomment %}
+{% assign by_place = talks | group_by: "location" %}
+{% capture map_points %}{% for g in by_place %}{% assign first = g.items | first %}{% if first.lat %}{% unless forloop.first %},{% endunless %}{"title": {{ g.name | jsonify }}, "size": {{ g.items.size }}, "lat": {{ first.lat }}, "lng": {{ first.lng }}, "lines": [{% for t in g.items %}{% capture line %}{{ t.venue }} ({{ t.date | date: "%b %Y" }}){% endcapture %}{{ line | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}]}{% endif %}{% endfor %}{% endcapture %}
+{% capture map_countries %}{% assign seen = "" %}{% for g in by_place %}{% assign country = g.name | split: ", " | last %}{% case country %}{% when "India" %}{% assign cid = "356" %}{% when "Japan" %}{% assign cid = "392" %}{% when "France" %}{% assign cid = "250" %}{% when "Greece" %}{% assign cid = "300" %}{% when "Germany" %}{% assign cid = "276" %}{% when "Belgium" %}{% assign cid = "056" %}{% when "Singapore" %}{% assign cid = "702" %}{% else %}{% assign cid = "" %}{% endcase %}{% if cid != "" %}{% assign n = 0 %}{% for t in talks %}{% assign tc = t.location | split: ", " | last %}{% if tc == country %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}{% unless seen contains cid %}{% if seen != "" %},{% endif %}{"id": "{{ cid }}", "name": {{ country | jsonify }}, "papers": {{ n }}, "label": "{{ n }} talk{% if n != 1 %}s{% endif %}"}{% assign seen = seen | append: cid | append: " " %}{% endunless %}{% endif %}{% endfor %}{% endcapture %}
+
+<p class="pub-stats">{{ talks.size }} talks in {{ by_place.size }} cities. Hover over a dot to see the talks given there.</p>
+
+<div class="map-frame map-wrap map-frame--talks">
+  <div class="canv-frame__bar">
+    <span class="tl-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="canv-frame__title">~/talks --map</span>
+    <span class="canv-frame__label">Where I have given talks</span>
+  </div>
+  <div class="map-frame__body">
+    {% include world-map.svg %}
+  </div>
+  <script type="application/json" class="map-data">{"countries": [{{ map_countries | strip }}], "points": [{{ map_points | strip }}]}</script>
+</div>
+
 {% assign by_year = talks | group_by_exp: "t", "t.date | date: '%Y'" %}
 {% for y in by_year %}
   <h2 class="pub-year">{{ y.name }}</h2>
@@ -30,3 +50,5 @@ author_profile: true
   </ul>
 {% endfor %}
 </div>
+
+<script src="{{ base_path }}/assets/js/maps.js?v={{ site.time | date: '%s' }}" defer></script>

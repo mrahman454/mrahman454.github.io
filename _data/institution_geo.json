@@ -1,0 +1,194 @@
+{
+ "Bauhaus-Universität Weimar": {
+  "city": "Weimar",
+  "country": "DE",
+  "lat": 50.9803,
+  "lng": 11.329
+ },
+ "EPFL": {
+  "city": "Lausanne",
+  "country": "CH",
+  "lat": 46.516,
+  "lng": 6.6328
+ },
+ "FHNW": {
+  "city": "Windisch",
+  "country": "CH",
+  "lat": 47.479,
+  "lng": 8.2184
+ },
+ "Graz University of Technology": {
+  "city": "Graz",
+  "country": "AT",
+  "lat": 47.0673,
+  "lng": 15.442
+ },
+ "Hainan University": {
+  "city": "Haikou",
+  "country": "CN",
+  "lat": 20.0342,
+  "lng": 110.3465
+ },
+ "IIIT Delhi": {
+  "city": "Delhi",
+  "country": "IN",
+  "lat": 28.6519,
+  "lng": 77.2315
+ },
+ "IIT Bhilai": {
+  "city": "Bhilai",
+  "country": "IN",
+  "lat": 21.2092,
+  "lng": 81.4285
+ },
+ "IIT Kharagpur": {
+  "city": "Kharagpur",
+  "country": "IN",
+  "lat": 22.3397,
+  "lng": 87.325
+ },
+ "IIT Madras": {
+  "city": "Chennai",
+  "country": "IN",
+  "lat": 13.0878,
+  "lng": 80.2785
+ },
+ "IRISA / Université de Rennes": {
+  "city": "Rennes",
+  "country": "FR",
+  "lat": 48.1111,
+  "lng": -1.6743
+ },
+ "Indian Statistical Institute": {
+  "city": "Kolkata",
+  "country": "IN",
+  "lat": 22.5626,
+  "lng": 88.363
+ },
+ "Institute of Information Engineering, CAS": {
+  "city": "Beijing",
+  "country": "CN",
+  "lat": 39.9075,
+  "lng": 116.3972
+ },
+ "Jinan University": {
+  "city": "Guangzhou",
+  "country": "CN",
+  "lat": 23.1167,
+  "lng": 113.25
+ },
+ "Kyoto University": {
+  "city": "Kyoto",
+  "country": "JP",
+  "lat": 35.0211,
+  "lng": 135.7538
+ },
+ "Mitsubishi Electric": {
+  "city": "Tokyo",
+  "country": "JP",
+  "lat": 35.6895,
+  "lng": 139.6917
+ },
+ "NEC": {
+  "city": "Tokyo",
+  "country": "JP",
+  "lat": 35.6895,
+  "lng": 139.6917
+ },
+ "NEC Solution Innovators": {
+  "city": "Tokyo",
+  "country": "JP",
+  "lat": 35.6895,
+  "lng": 139.6917
+ },
+ "NICT": {
+  "city": "Tokyo",
+  "country": "JP",
+  "lat": 35.6895,
+  "lng": 139.6917
+ },
+ "NTT": {
+  "city": "Tokyo",
+  "country": "JP",
+  "lat": 35.6895,
+  "lng": 139.7534
+ },
+ "Nagoya University": {
+  "city": "Nagoya",
+  "country": "JP",
+  "lat": 35.1815,
+  "lng": 136.9064
+ },
+ "Nanyang Technological University": {
+  "city": "Singapore",
+  "country": "SG",
+  "lat": 1.2897,
+  "lng": 103.8501
+ },
+ "Presidency University": {
+  "city": "Kolkata",
+  "country": "IN",
+  "lat": 22.5626,
+  "lng": 88.363
+ },
+ "Ruhr University Bochum": {
+  "city": "Bochum",
+  "country": "DE",
+  "lat": 51.4817,
+  "lng": 7.2165
+ },
+ "Siksha O Anusandhan University": {
+  "city": "Bhubaneswar",
+  "country": "IN",
+  "lat": 20.2724,
+  "lng": 85.8338
+ },
+ "The University of Osaka": {
+  "city": "Osaka",
+  "country": "JP",
+  "lat": 34.6938,
+  "lng": 135.5011
+ },
+ "Tokyo Institute of Technology": {
+  "city": "Tokyo",
+  "country": "JP",
+  "lat": 35.6895,
+  "lng": 139.6917
+ },
+ "University of Calcutta": {
+  "city": "Kolkata",
+  "country": "IN",
+  "lat": 22.5626,
+  "lng": 88.363
+ },
+ "University of Chinese Academy of Sciences": {
+  "city": "Beijing",
+  "country": "CN",
+  "lat": 39.9075,
+  "lng": 116.3972
+ },
+ "University of Haifa": {
+  "city": "Haifa",
+  "country": "IL",
+  "lat": 32.813,
+  "lng": 34.9993
+ },
+ "University of Hyogo": {
+  "city": "Kobe",
+  "country": "JP",
+  "lat": 34.6913,
+  "lng": 135.183
+ },
+ "Università della Svizzera italiana": {
+  "city": "Lugano",
+  "country": "CH",
+  "lat": 46.0101,
+  "lng": 8.96
+ },
+ "Yokohama National University": {
+  "city": "Yokohama",
+  "country": "JP",
+  "lat": 35.4333,
+  "lng": 139.65
+ }
+}

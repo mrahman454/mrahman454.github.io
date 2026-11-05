@@ -1,0 +1,93 @@
+---
+layout: wide
+title: "Challenge: break TOY-FEISTEL"
+permalink: /challenge/
+---
+
+{% include base_path %}
+{% assign ch = site.data.challenge %}
+
+<div class="acad chal">
+
+<p class="pub-stats">
+  Can you recover the key? TOY-FEISTEL is a tiny cipher built from the <a href="https://doi.org/10.1007/978-3-540-74735-2_31">PRESENT</a> S-box.
+  It is deliberately weak: each level has a neat shortcut that beats brute force. Everything runs in your browser.
+</p>
+
+<div class="chal-win">
+  <div class="canv-frame__bar">
+    <span class="tl-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="canv-frame__title">~/challenge/toy-feistel.txt</span>
+    <span class="canv-frame__label">The cipher</span>
+  </div>
+<pre class="chal-spec">block    32 bits  =  L || R            (two 16-bit halves)
+round i  (L, R)  -&gt;  (R,  L xor F(R, K_i))
+F(x, k)  =  rotl16( S(x xor k), 5 )     (rotate left by 5)
+S        PRESENT S-box on each 4-bit nibble:
+         x    : 0 1 2 3 4 5 6 7 8 9 A B C D E F
+         S(x) : C 5 6 B 9 0 A D 3 E F 8 4 7 1 2
+output   (L_r, R_r) after the last round   (no final swap)
+key      K1 K2 ... K_r, each 16 bits; ciphertexts are written in hex</pre>
+  <p class="chal-console">Prefer code? Open your browser console: <code>toy.encrypt(0x24D13340, [0x1234, 0xABCD])</code>, plus <code>toy.F</code>, <code>toy.S</code>, <code>toy.Sinv</code>, <code>toy.rotl</code>, <code>toy.rotr</code>.</p>
+</div>
+
+{% for lv in (1..2) %}
+{% capture key %}level{{ lv }}{% endcapture %}
+{% assign L = ch[key] %}
+{% capture pairs_json %}[{% for pr in L.pairs %}["{{ pr.plaintext }}","{{ pr.ciphertext }}"]{% unless forloop.last %},{% endunless %}{% endfor %}]{% endcapture %}
+<section class="chal-level" data-level="{{ lv }}" data-rounds="{{ L.rounds }}" data-pairs='{{ pairs_json | strip }}'>
+  <h2>Level {{ lv }} &middot; {{ L.rounds }} rounds, {{ L.rounds | times: 16 }}-bit key</h2>
+  {% if lv == 1 %}
+  <p>One known plaintext/ciphertext pair. Brute force would try 2<sup>32</sup> keys&hellip; but you will not need to.</p>
+  {% else %}
+  <p>Three known pairs. Brute force needs 2<sup>48</sup> tries. Find the key with about 2<sup>16</sup> work.</p>
+  {% endif %}
+  <table class="acad-table chal-pairs">
+    <thead><tr><th>#</th><th>plaintext</th><th>ciphertext</th></tr></thead>
+    <tbody>
+      {% for pr in L.pairs %}<tr><td>{{ forloop.index }}</td><td><code>{{ pr.plaintext }}</code></td><td><code>{{ pr.ciphertext }}</code></td></tr>{% endfor %}
+    </tbody>
+  </table>
+  <form class="chal-form" autocomplete="off">
+    <label for="chal-key-{{ lv }}">Key (K1 K2{% if L.rounds > 2 %} K3{% endif %}, {{ L.rounds | times: 4 }} hex digits)</label>
+    <div class="chal-row">
+      <input id="chal-key-{{ lv }}" class="chal-input" type="text" inputmode="latin" spellcheck="false" maxlength="{{ L.rounds | times: 5 }}" placeholder="{% if L.rounds > 2 %}1234 ABCD 5678{% else %}1234 ABCD{% endif %}">
+      <button type="submit" class="chal-btn">check</button>
+    </div>
+    <div class="chal-result" role="status" aria-live="polite"></div>
+  </form>
+  <div class="chal-done" hidden>
+    <p>&#127881; Nice work! Want to be in the Hall of Fame? <a href="mailto:{{ site.author.email }}?subject=TOY-FEISTEL%20level%20{{ lv }}%20solved&amp;body=Name%20to%20show%3A%20%0AHow%20I%20did%20it%3A%20">Email me</a> your name and a sentence on how you did it.</p>
+  </div>
+  <details class="chal-hints">
+    <summary>Hints</summary>
+    {% if lv == 1 %}
+    <ol>
+      <li>Write out what each ciphertext half equals after two rounds, in terms of L<sub>0</sub>, R<sub>0</sub>, K1, K2.</li>
+      <li>The left half is L<sub>2</sub> = L<sub>0</sub> xor F(R<sub>0</sub>, K1). You know everything here except K1, and F can be undone.</li>
+      <li>K1 = S<sup>-1</sup>(rotr(L<sub>2</sub> xor L<sub>0</sub>, 5)) xor R<sub>0</sub>. Do the same for K2 using the right half.</li>
+    </ol>
+    {% else %}
+    <ol>
+      <li>If you knew K1, what would you know about the state after the first round?</li>
+      <li>With K1 fixed, the last two rounds are exactly Level 1: K2 and K3 follow from one pair.</li>
+      <li>Loop over all 2<sup>16</sup> values of K1, derive K2 and K3 from pair 1, and keep the guess that also fits pairs 2 and 3. This is a guess-and-determine attack.</li>
+    </ol>
+    {% endif %}
+  </details>
+</section>
+{% endfor %}
+
+<h2>Hall of Fame</h2>
+{% assign hof = site.data.hall_of_fame %}
+{% if hof and hof.size > 0 %}
+<ul class="coauthor-list">
+  {% for h in hof %}<li><span class="coauthor-list__name">{{ h.name }}{% if h.note %} <span class="coauthor-list__cc">{{ h.note }}</span>{% endif %}</span> <span class="coauthor-list__n">level {{ h.level }}{% if h.date %} &middot; {{ h.date }}{% endif %}</span></li>{% endfor %}
+</ul>
+{% else %}
+<p class="pub-stats">No one yet. Be the first!</p>
+{% endif %}
+
+</div>
+
+<script src="{{ base_path }}/assets/js/challenge.js?v={{ site.time | date: '%s' }}" defer></script>

@@ -1,0 +1,97 @@
+/* ==========================================================================
+   World maps (Co-authors map view, Talks page)
+   ========================================================================== */
+
+.map-frame {
+  margin: 1.2em 0 0.8em;
+  border: 1px solid var(--ctp-surface2);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #181825;
+  box-shadow: 0 18px 44px -16px rgba(0, 0, 0, 0.55);
+}
+.map-frame__body { padding: 0.6em 0.6em 0.2em; }
+
+.world-map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.world-map path {
+  fill: #313244;
+  stroke: #181825;
+  stroke-width: 0.5;
+  transition: fill 0.15s;
+}
+.world-map path[data-level="1"] { fill: #4f4a6b; }
+.world-map path[data-level="2"] { fill: #6e5f9a; }
+.world-map path[data-level="3"] { fill: #9a80cf; }
+.world-map path[data-level="4"] { fill: #cba6f7; }
+.world-map path[data-level]:hover { fill: #f5c2e7; cursor: default; }
+
+.world-map__dot {
+  fill: #89dceb;
+  fill-opacity: 0.85;
+  stroke: #11111b;
+  stroke-width: 1;
+  cursor: pointer;
+  transition: r 0.15s;
+  &:hover, &:focus { fill-opacity: 1; stroke: #f9e2af; stroke-width: 1.5; outline: none; }
+}
+.world-map__dot.is-mine { fill: #f38ba8; }
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em 1.2em;
+  padding: 0.4em 0.9em 0.7em;
+  font-size: 0.78em;
+  color: var(--ctp-subtext);
+}
+.map-legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 0.4em;
+  vertical-align: -0.05em;
+}
+
+/* tooltip: contrasts with the page, like the publication pop-up */
+.map-tip {
+  position: fixed;
+  z-index: 70;
+  max-width: 280px;
+  padding: 0.5em 0.75em;
+  border-radius: 8px;
+  background: #eff1f5;
+  color: #4c4f69;
+  border: 1px solid #bcc0cc;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+.map-tip.is-open { opacity: 1; visibility: visible; }
+.map-tip__title { font-weight: 700; color: #1e1e2e; margin-bottom: 0.15em; }
+
+html.serious {
+  .map-frame { background: #e2e6ec; box-shadow: 0 14px 34px -16px rgba(27, 35, 48, 0.35); }
+  .world-map path { fill: #c9d0d9; stroke: #e2e6ec; }
+  .world-map path[data-level="1"] { fill: #a9bbd0; }
+  .world-map path[data-level="2"] { fill: #7f9bbb; }
+  .world-map path[data-level="3"] { fill: #4d74a0; }
+  .world-map path[data-level="4"] { fill: #1c4d7d; }
+  .world-map path[data-level]:hover { fill: #0f3358; }
+  .world-map__dot { fill: #f2c46d; stroke: #1b2330; }
+  .world-map__dot.is-mine { fill: #b42318; }
+  .map-tip {
+    background: #1d2b3a; color: #e9eef4; border-color: #33475c;
+    font-family: "Source Sans 3", -apple-system, "Segoe UI", Arial, sans-serif; font-size: 0.85rem;
+  }
+  .map-tip__title { color: #ffffff; }
+}
+:root { --map-mine: #f38ba8; --map-dot: #89dceb; }
+html.serious { --map-mine: #b42318; --map-dot: #f2c46d; }

@@ -85,6 +85,30 @@ TEMPLATE = os.path.join(ROOT, "tools", "canv", "template.html")
 OUT_DIR = os.path.join(ROOT, "assets", "canv")
 AFFIL_FILE = os.path.join(ROOT, "_data", "affiliations.json")
 LIST_OUT = os.path.join(ROOT, "_data", "coauthors.json")
+GEO_FILE = os.path.join(ROOT, "_data", "institution_geo.json")
+MAP_OUT = os.path.join(ROOT, "_data", "collab_map.json")
+
+# ISO 3166-1 alpha-2 -> (numeric code used by the world map, English name)
+COUNTRIES = {
+    "AE": ("784", "United Arab Emirates"), "AR": ("032", "Argentina"), "AT": ("040", "Austria"),
+    "AU": ("036", "Australia"), "BD": ("050", "Bangladesh"), "BE": ("056", "Belgium"),
+    "BR": ("076", "Brazil"), "CA": ("124", "Canada"), "CH": ("756", "Switzerland"),
+    "CL": ("152", "Chile"), "CN": ("156", "China"), "CZ": ("203", "Czechia"),
+    "DE": ("276", "Germany"), "DK": ("208", "Denmark"), "EG": ("818", "Egypt"),
+    "ES": ("724", "Spain"), "FI": ("246", "Finland"), "FR": ("250", "France"),
+    "GB": ("826", "United Kingdom"), "GR": ("300", "Greece"), "HK": ("344", "Hong Kong"),
+    "HU": ("348", "Hungary"), "ID": ("360", "Indonesia"), "IE": ("372", "Ireland"),
+    "IL": ("376", "Israel"), "IN": ("356", "India"), "IR": ("364", "Iran"),
+    "IT": ("380", "Italy"), "JP": ("392", "Japan"), "KR": ("410", "South Korea"),
+    "LK": ("144", "Sri Lanka"), "LU": ("442", "Luxembourg"), "MX": ("484", "Mexico"),
+    "MY": ("458", "Malaysia"), "NL": ("528", "Netherlands"), "NO": ("578", "Norway"),
+    "NP": ("524", "Nepal"), "NZ": ("554", "New Zealand"), "PK": ("586", "Pakistan"),
+    "PL": ("616", "Poland"), "PT": ("620", "Portugal"), "QA": ("634", "Qatar"),
+    "RO": ("642", "Romania"), "RU": ("643", "Russia"), "SA": ("682", "Saudi Arabia"),
+    "SE": ("752", "Sweden"), "SG": ("702", "Singapore"), "TH": ("764", "Thailand"),
+    "TR": ("792", "Türkiye"), "TW": ("158", "Taiwan"), "UA": ("804", "Ukraine"),
+    "US": ("840", "United States"), "VN": ("704", "Vietnam"), "ZA": ("710", "South Africa"),
+}
 UA = {"User-Agent": "mrahman454.github.io publication updater (+https://mrahman454.github.io)"}
 
 
@@ -119,7 +143,8 @@ def fetch_affiliations(papers):
     saved = json.load(open(AFFIL_FILE, encoding="utf-8")) if os.path.exists(AFFIL_FILE) else {}
     added = 0
     for p in papers:
-        if not p["doi"] or p["doi"] in saved:
+        have = saved.get(p["doi"])
+        if not p["doi"] or (have and all(len(i) >= 3 for _, insts in have for i in insts)):
             continue
         url = "https://api.openalex.org/works/doi:" + urllib.parse.quote(p["doi"])
         try:
@@ -129,7 +154,8 @@ def fetch_affiliations(papers):
             continue
         saved[p["doi"]] = [
             [a["author"]["display_name"],
-             [[i["display_name"], i.get("country_code") or ""] for i in a.get("institutions", [])]]
+             [[i["display_name"], i.get("country_code") or "", (i.get("id") or "").rsplit("/", 1)[-1]]
+              for i in a.get("institutions", [])]]
             for a in w.get("authorships", [])]
         added += 1
         time.sleep(0.3)
@@ -142,14 +168,15 @@ def fetch_affiliations(papers):
 
 
 def clean_institutions(raw):
-    names = [(INSTITUTION_NAMES.get(n, n), c) for n, c in raw]
+    names = [(INSTITUTION_NAMES.get(r[0], r[0]), r[1] if len(r) > 1 else "", r[2] if len(r) > 2 else "")
+             for r in raw]
     specific = [x for x in names if x[0] not in UMBRELLAS]
     names = specific or names
     seen, out = set(), []
-    for n, c in names:
+    for n, c, i in names:
         if n not in seen:
             seen.add(n)
-            out.append((n, c))
+            out.append((n, c, i))
     return out
 
 
@@ -167,7 +194,7 @@ def my_position(year):
 
 def institutions_per_paper(papers, saved):
     """For each paper: the set of institutions involved, and mine."""
-    result, countries = [], {}
+    result, countries, ids = [], {}, {}
     for p in papers:
         entries = saved.get(p["doi"]) if p["doi"] else PAPERS_WITHOUT_DOI.get(p["title"].lower())
         if not entries:
@@ -176,19 +203,56 @@ def institutions_per_paper(papers, saved):
         for author, raw in entries:
             raw = [r if isinstance(r, list) else [r, ""] for r in raw]
             cleaned = clean_institutions(raw)
-            for n, c in cleaned:
+            for n, c, i in cleaned:
                 if c:
                     countries.setdefault(n, c)
+                if i:
+                    ids.setdefault(n, i)
             if is_me(author):
                 fix = OWN_AFFILIATION_FIXES.get(p["doi"])
-                ok = [n for n, _ in cleaned if n in MY_INSTITUTIONS]
+                ok = [n for n, _, _ in cleaned if n in MY_INSTITUTIONS]
                 chosen = fix or ok or [my_position(p["year"])]
                 mine += chosen
                 insts += chosen
             else:
-                insts += [n for n, _ in cleaned]
+                insts += [n for n, _, _ in cleaned]
         result.append({"title": p["title"], "institutions": list(dict.fromkeys(insts)), "mine": list(dict.fromkeys(mine))})
-    return result, countries
+    return result, countries, ids
+
+
+def fetch_geo(ids):
+    """Coordinates of each institution (OpenAlex), saved in _data/institution_geo.json."""
+    geo = json.load(open(GEO_FILE, encoding="utf-8")) if os.path.exists(GEO_FILE) else {}
+    added = 0
+    for name, iid in sorted(ids.items()):
+        if name in geo or not iid:
+            continue
+        try:
+            inst = json.load(urllib.request.urlopen(urllib.request.Request(
+                "https://api.openalex.org/institutions/" + iid, headers=UA), timeout=60))
+        except Exception as exc:
+            print(f"  could not fetch location of {name}: {exc}")
+            continue
+        g = inst.get("geo") or {}
+        if g.get("latitude") is None:
+            continue
+        geo[name] = {"lat": round(g["latitude"], 4), "lng": round(g["longitude"], 4),
+                     "city": g.get("city") or "", "country": g.get("country_code") or ""}
+        added += 1
+        time.sleep(0.2)
+    if added:
+        with open(GEO_FILE, "w", encoding="utf-8") as fh:
+            json.dump(geo, fh, ensure_ascii=False, indent=1, sort_keys=True)
+            fh.write("\n")
+        print(f"Saved locations for {added} institution(s)")
+    return geo
+
+
+def write_if_changed(path, text):
+    old = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
+    if text != old:
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(text)
 
 
 # ---------------------------------------------------------------- graph + page
@@ -258,7 +322,7 @@ def main():
     # Institutions
     saved = fetch_affiliations(papers) if "--fetch" in sys.argv else (
         json.load(open(AFFIL_FILE, encoding="utf-8")) if os.path.exists(AFFIL_FILE) else {})
-    per_paper, countries = institutions_per_paper(papers, saved)
+    per_paper, countries, ids = institutions_per_paper(papers, saved)
     mine = list(dict.fromkeys(n for p in per_paper for n in p["mine"]))
     if any(CURRENT_INSTITUTION in p["institutions"] for p in per_paper) and CURRENT_INSTITUTION not in mine:
         mine.append(CURRENT_INSTITUTION)
@@ -272,6 +336,36 @@ def main():
     write_page("institutions.html", i_edges, i_frequent, mine, len(institutions),
                f"Institutions of {ME} and co-authors", "institution", "institutions",
                counts=i_count, unit="paper")
+
+    # Map: papers per country, and one dot per institution
+    geo = fetch_geo(ids) if "--fetch" in sys.argv else (
+        json.load(open(GEO_FILE, encoding="utf-8")) if os.path.exists(GEO_FILE) else {})
+    per_country = {}
+    for p in per_paper:
+        for code in {countries.get(n, "") for n in p["institutions"]} - {""}:
+            per_country[code] = per_country.get(code, 0) + 1
+    def plural(n, word):
+        return f"{n} {word}" + ("" if n == 1 else "s")
+    country_list = []
+    for c, k in sorted(per_country.items(), key=lambda x: (-x[1], x[0])):
+        num, cname = COUNTRIES.get(c, ("", c))
+        n_inst = sum(1 for i in institutions if i["country"] == c)
+        country_list.append({"code": c, "id": num, "name": cname, "papers": k, "institutions": n_inst,
+                             "label": f"{plural(k, 'paper')} · {plural(n_inst, 'institution')}"})
+    points = []
+    for i in institutions:
+        g = geo.get(i["name"])
+        if not g:
+            continue
+        place = ", ".join(x for x in (g["city"], COUNTRIES.get(i["country"], ("", i["country"]))[1]) if x)
+        lines = [place, plural(i["papers"], "paper")] + (["my institution"] if i["mine"] else [])
+        points.append({"title": i["name"], "lines": lines, "size": i["papers"], "mine": i["mine"],
+                       "lat": g["lat"], "lng": g["lng"]})
+    missing = [i["name"] for i in institutions if i["name"] not in geo]
+    if missing:
+        print("No location for:", ", ".join(missing))
+    write_if_changed(MAP_OUT, json.dumps({"countries": country_list, "points": points},
+                                         ensure_ascii=False, indent=1) + "\n")
 
     listing = json.dumps({"total": len(people), "papers": len(papers), "people": people,
                           "institutions_total": len(institutions), "institutions_papers": len(per_paper),

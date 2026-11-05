@@ -5,6 +5,8 @@ type: "Invited talk"
 permalink: /talks/2025-12-08-key-committing-nwc-2025
 venue: "National Workshop on Cryptology 2025, IIT Bhilai"
 location: "Bhilai, India"
+lat: 21.2092
+lng: 81.4285
 date: 2025-12-08
 ---
 

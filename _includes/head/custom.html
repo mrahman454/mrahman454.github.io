@@ -14,4 +14,9 @@
 <link rel="icon" href="/images/favicon.ico"/>
 <meta name="theme-color" content="#ffffff"/>
 
+{% if site.goatcounter.code and site.goatcounter.code != "" %}
+<!-- Visitor statistics (GoatCounter, no cookies) -->
+<script data-goatcounter="https://{{ site.goatcounter.code }}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+{% endif %}
+
 <!-- end custom head snippets -->
