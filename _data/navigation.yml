@@ -11,6 +11,9 @@ main:
   - title: "Publications"
     url: /publications/
 
+  - title: "Co-authors"
+    url: /coauthors/
+
   - title: "Talks"
     url: /talks/
 
