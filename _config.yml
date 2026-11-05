@@ -155,7 +155,7 @@ social:
 # 3. Optional: to show a public "N visits" line in the footer, turn on
 #    Settings -> "Allow adding visitor counts on your website" in GoatCounter and set the flag below.
 goatcounter:
-  code               : ""      # e.g. "mrahman454"; empty = statistics off
+  code               : "mrahman454"  # empty = statistics off
   show_visits        : false   # true = footer shows the total number of visits
 
 # Analytics
