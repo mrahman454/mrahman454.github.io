@@ -50,5 +50,9 @@ permalink: /coauthors/
     } catch (e) {}
   }
   f.addEventListener('load', function () { fit(); setTimeout(fit, 500); setTimeout(fit, 1500); });
+  /* Redraw the network in the new colours when the serious/fun switch is used */
+  document.addEventListener('modechange', function () {
+    try { f.contentWindow.location.reload(); } catch (e) { f.src = f.src; }
+  });
 })();
 </script>

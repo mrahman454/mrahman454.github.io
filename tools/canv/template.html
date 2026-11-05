@@ -12,9 +12,9 @@
     </script>
     <style>
         body {
-            background-color: #f7f8fa;
-            color: #2b2f3a;
-            font-family: "Source Sans 3", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #181825;
+            color: #cdd6f4;
+            font-family: "JetBrains Mono", Menlo, Consolas, monospace;
             font-size: 14px;
             width: 100%;
             margin: 0;
@@ -23,7 +23,11 @@
         }
         html, body { overflow: hidden; }
         #my-canv-input { margin: 10px 0 4px; }
-        #my-canv-input input[type=text] { font: inherit; padding: 2px 6px; border: 1px solid #c5cad3; border-radius: 4px; }
+        #my-canv-input input[type=text] { font: inherit; padding: 2px 6px; border: 1px solid #45475a; border-radius: 4px; background: #1e1e2e; color: #cdd6f4; }
+        #my-canv-input input[type=checkbox] { accent-color: #cba6f7; }
+        html[data-mode=serious] body { background-color: #e2e6ec; color: #1b2330; font-family: "Source Sans 3", -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+        html[data-mode=serious] #my-canv-input input[type=text] { border-color: #b5bec9; background: #edf0f4; color: #1b2330; }
+        html[data-mode=serious] #my-canv-input input[type=checkbox] { accent-color: #1c4d7d; }
 
         p {
             margin-top: .65em;
@@ -98,6 +102,32 @@
             margin: 0 auto;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<script>
+/* Colours follow the website's mode (fun = dark terminal, serious = slate).
+   The mode is read from the page that embeds this one, or from the visitor's saved choice. */
+(function () {
+  var serious = false;
+  try { if (window.parent !== window && window.parent.document.documentElement.classList.contains('serious')) serious = true; } catch (e) {}
+  if (!serious) { try { serious = localStorage.getItem('site-mode') === 'serious'; } catch (e) {} }
+  document.documentElement.setAttribute('data-mode', serious ? 'serious' : 'fun');
+  function mix(a, b, t) {
+    function ch(h, i) { return parseInt(h.substr(1 + 2 * i, 2), 16); }
+    var c = [0, 1, 2].map(function (i) { return Math.round(ch(a, i) + (ch(b, i) - ch(a, i)) * t); });
+    return 'rgb(' + c.join(',') + ')';
+  }
+  function scale(lo, hi) { return function (t) { return mix(lo, hi, Math.max(0, Math.min(1, (t - 0.15) / 0.45))); }; }
+  window.__canvTheme = serious ? {
+    text: '#1b2330', link: 'rgb(70, 85, 105)', outline: '#1b2330', ring: '#e2e6ec',
+    centre: '#b42318', scale: scale('#b7c4d3', '#1c4d7d'),
+    font: '600 12px "Source Sans 3", Arial, sans-serif'
+  } : {
+    text: '#cdd6f4', link: 'rgb(127, 132, 156)', outline: '#f9e2af', ring: '#181825',
+    centre: '#f38ba8', scale: scale('#585b70', '#cba6f7'),
+    font: '500 11px "JetBrains Mono", Menlo, monospace'
+  };
+})();
+</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel='stylesheet' href='../css/styles.css'> -->
     <!-- <script src='../js/jquery-3.4.1.min.js'></script>
@@ -1013,10 +1043,10 @@
         }
         Node.prototype.outline = function () {
             if (this.matchesString() || this.containsMouse()) {
-                return "black";
+                return window.__canvTheme.outline;
             }
             else {
-                return d3.rgb(255, 255, 255);
+                return window.__canvTheme.ring;
             }
         }
         Node.prototype.isMetadataKey = function (key) {
@@ -1053,7 +1083,7 @@
             // : )
             // If you co-authors include me, then my node will be filled red
             if (this.name == '__CANV_CENTRE__') {
-                ctx.fillStyle = d3.rgb('red');
+                ctx.fillStyle = window.__canvTheme.centre;
             }
             else {
                 ctx.fillStyle = d3.rgb(this.__scaledColor);
@@ -1148,8 +1178,8 @@
 
         Text.prototype.draw = function (ctx) {
             ctx.save();
-            ctx.fillStyle = "black";
-            ctx.font = this.font;
+            ctx.fillStyle = window.__canvTheme.text;
+            ctx.font = window.__canvTheme.font;
             ctx.fillText(this.value, this.x, this.y);
             ctx.restore();
         }
@@ -1158,7 +1188,7 @@
             text.textContent = this.value;
             text.setAttributeNS(null, 'x', this.x);
             text.setAttributeNS(null, 'y', this.y);
-            text.setAttributeNS(null, 'style', 'fill: black; font-size: ' + this.font + ';');
+            text.setAttributeNS(null, 'style', 'fill: ' + window.__canvTheme.text + '; font-size: ' + this.font + ';');
             return text;
         }
         ////////////////////////////////////////////////////////////////////////////////
@@ -1185,7 +1215,7 @@
             ctx.moveTo(this.source.x, this.source.y);
             ctx.lineTo(this.target.x, this.target.y);
             ctx.lineWidth = this.width();
-            ctx.strokeStyle = this.strokeStyle;
+            ctx.strokeStyle = window.__canvTheme.link;
             ctx.stroke();
             ctx.restore();
         }
@@ -1807,7 +1837,7 @@
             }
             else {
                 // return d3.hsl(210 * (1 - webweb.scales.colors.scalar(x)), 0.7, 0.5);
-                return d3.interpolateReds(webweb.scales.colors.scalar(x))
+                return window.__canvTheme.scale(webweb.scales.colors.scalar(x))
             }
         }
         ////////////////////////////////////////////////////////////////////////////////
