@@ -212,7 +212,7 @@ def build_graph(groups, centres):
     return edges, frequent, strength
 
 
-def write_page(filename, edges, frequent, centres, n_nodes, title, singular, plural):
+def write_page(filename, edges, frequent, centres, n_nodes, title, singular, plural, counts=None, unit="paper"):
     data = {
         "display": {
             "colorBy": "strength", "sizeBy": "strength", "charge": 256, "linkLength": 200,
@@ -228,6 +228,8 @@ def write_page(filename, edges, frequent, centres, n_nodes, title, singular, plu
     blob = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
     page = (page.replace("/*CANV_DATA*/null", blob)
                 .replace("/*CANV_CENTRES*/[]", json.dumps(centres, ensure_ascii=False).replace("</", "<\\/"))
+                .replace("/*CANV_COUNTS*/{}", json.dumps(counts or {}, ensure_ascii=False).replace("</", "<\\/"))
+                .replace("__CANV_UNIT__", unit)
                 .replace("__CANV_PLURAL__", plural).replace("__CANV_SINGULAR__", singular))
     path = os.path.join(OUT_DIR, filename)
     os.makedirs(OUT_DIR, exist_ok=True)
@@ -268,7 +270,8 @@ def main():
     institutions = [{"name": n, "papers": i_count[n], "country": countries.get(n, ""), "mine": n in mine}
                     for n in sorted(i_count, key=lambda n: (n not in mine, -i_count[n], n))]
     write_page("institutions.html", i_edges, i_frequent, mine, len(institutions),
-               f"Institution network of {ME}", "institution", "institutions")
+               f"Institutions of {ME} and co-authors", "institution", "institutions",
+               counts=i_count, unit="paper")
 
     listing = json.dumps({"total": len(people), "papers": len(papers), "people": people,
                           "institutions_total": len(institutions), "institutions_papers": len(per_paper),

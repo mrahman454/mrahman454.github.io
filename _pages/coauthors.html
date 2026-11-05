@@ -19,8 +19,9 @@ permalink: /coauthors/
   Bigger, darker circles are more frequent collaborators. Hover over a circle to see the name, drag circles to rearrange the network, or search for a co-author.
 </p>
 <p class="pub-stats net-only" data-net="institutions" hidden>
-  The institutions behind my papers: <strong>{{ ca.institutions_total }} institutions</strong> across {{ ca.institutions_papers }} papers, linked when they appear on the same paper.
-  My own institutions are highlighted. Affiliations are taken from each paper's record in <a href="https://openalex.org/">OpenAlex</a>.
+  <strong>Institutions of me and my co-authors:</strong> {{ ca.institutions_total }} institutions across {{ ca.institutions_papers }} papers, taken from the affiliations listed on each paper, both mine and my co-authors&rsquo;.
+  Institutions are linked when they appear on the same paper, and my own are highlighted. Hover over a circle to see the institution and its number of papers.
+  Affiliation data: <a href="https://openalex.org/">OpenAlex</a>.
 </p>
 
 <div class="canv-frame">
@@ -48,7 +49,7 @@ permalink: /coauthors/
 </div>
 
 <div class="net-only" data-net="institutions" hidden>
-<h2>Institutions</h2>
+<h2>Institutions of me and my co-authors</h2>
 <ul class="coauthor-list">
   {% for i in ca.institutions %}
   <li{% if i.mine %} class="is-mine"{% endif %}><span class="coauthor-list__name">{{ i.name }}{% if i.country != "" %} <span class="coauthor-list__cc">{{ i.country }}</span>{% endif %}{% if i.mine %} <span class="coauthor-list__mine">mine</span>{% endif %}</span> <span class="coauthor-list__n">{{ i.papers }} paper{% if i.papers != 1 %}s{% endif %}</span></li>
@@ -64,7 +65,7 @@ permalink: /coauthors/
   var version = '{{ site.time | date: "%s" }}';
   var NETS = {
     authors: { file: 'coauthors.html', title: '~/coauthors — canv', label: 'Co-authorship network' },
-    institutions: { file: 'institutions.html', title: '~/institutions — canv', label: 'Institution network' }
+    institutions: { file: 'institutions.html', title: '~/institutions (me + co-authors) — canv', label: 'Institutions — my and my co-authors’ affiliations' }
   };
   var f = document.getElementById('canv-frame');
   if (!f) return;
