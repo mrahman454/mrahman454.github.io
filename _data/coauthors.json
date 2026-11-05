@@ -4,218 +4,371 @@
  "people": [
   {
    "name": "Takanori Isobe",
-   "papers": 12,
-   "strength": 12.0
+   "papers": 12
   },
   {
    "name": "Dhiman Saha",
-   "papers": 7,
-   "strength": 7.0
+   "papers": 7
   },
   {
    "name": "Kosei Sakamoto",
-   "papers": 6,
-   "strength": 6.0
+   "papers": 6
   },
   {
    "name": "Goutam Paul",
-   "papers": 6,
-   "strength": 6.0
+   "papers": 6
   },
   {
    "name": "Subhadeep Banik",
-   "papers": 5,
-   "strength": 5.0
+   "papers": 5
   },
   {
    "name": "Tatsuya Ishikawa",
-   "papers": 4,
-   "strength": 4.0
+   "papers": 4
   },
   {
    "name": "Ravi Anand",
-   "papers": 4,
-   "strength": 4.0
+   "papers": 4
   },
   {
    "name": "Anup Kumar Kundu",
-   "papers": 4,
-   "strength": 4.0
+   "papers": 4
   },
   {
    "name": "Kazuhiko Minematsu",
-   "papers": 3,
-   "strength": 3.0
+   "papers": 3
   },
   {
    "name": "Santanu Sarkar",
-   "papers": 3,
-   "strength": 3.0
+   "papers": 3
   },
   {
    "name": "Avishek Adhikari",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Andrea Caforio",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Shibam Ghosh",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Amit Jana",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Fukang Liu",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Sandip Kumar Mondal",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Rentaro Shiba",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Takuro Shiraya",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Sahiba Suryawanshi",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Atsushi Tanaka",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Ryoma Ito",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Yu Sasaki",
-   "papers": 2,
-   "strength": 2.0
+   "papers": 2
   },
   {
    "name": "Jannis Bossert",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Patrick Derbez",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Pierre-Alain Fouque",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Samir Kundu",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Eik List",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Stefan Lucks",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Surajit Mandal",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Willi Meier",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "André Schrottenloher",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Ling Song",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Tomoyasu Suzaki",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Shion Utsumi",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Libo Wang",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Baofeng Wu",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Motoki Nakahashi",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Debasmita Chakraborty",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Hosein Hadipour",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Kazuma Nakata",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Prathamesh Ram",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Dilip Sau",
-   "papers": 1,
-   "strength": 1.0
+   "papers": 1
   },
   {
    "name": "Aman Sinha",
+   "papers": 1
+  }
+ ],
+ "institutions_total": 32,
+ "institutions_papers": 25,
+ "institutions": [
+  {
+   "name": "University of Hyogo",
+   "papers": 16,
+   "country": "JP",
+   "mine": true
+  },
+  {
+   "name": "Indian Statistical Institute",
+   "papers": 13,
+   "country": "IN",
+   "mine": true
+  },
+  {
+   "name": "Kyoto University",
+   "papers": 4,
+   "country": "JP",
+   "mine": true
+  },
+  {
+   "name": "Nanyang Technological University",
    "papers": 1,
-   "strength": 1.0
+   "country": "SG",
+   "mine": true
+  },
+  {
+   "name": "IIT Bhilai",
+   "papers": 9,
+   "country": "IN",
+   "mine": false
+  },
+  {
+   "name": "Mitsubishi Electric",
+   "papers": 5,
+   "country": "JP",
+   "mine": false
+  },
+  {
+   "name": "Università della Svizzera italiana",
+   "papers": 4,
+   "country": "CH",
+   "mine": false
+  },
+  {
+   "name": "IIT Madras",
+   "papers": 3,
+   "country": "IN",
+   "mine": false
+  },
+  {
+   "name": "NEC",
+   "papers": 3,
+   "country": "JP",
+   "mine": false
+  },
+  {
+   "name": "The University of Osaka",
+   "papers": 3,
+   "country": "JP",
+   "mine": false
+  },
+  {
+   "name": "EPFL",
+   "papers": 2,
+   "country": "CH",
+   "mine": false
+  },
+  {
+   "name": "NICT",
+   "papers": 2,
+   "country": "JP",
+   "mine": false
+  },
+  {
+   "name": "NTT",
+   "papers": 2,
+   "country": "JP",
+   "mine": false
+  },
+  {
+   "name": "University of Haifa",
+   "papers": 2,
+   "country": "IL",
+   "mine": false
+  },
+  {
+   "name": "Bauhaus-Universität Weimar",
+   "papers": 1,
+   "country": "DE",
+   "mine": false
+  },
+  {
+   "name": "FHNW",
+   "papers": 1,
+   "country": "CH",
+   "mine": false
+  },
+  {
+   "name": "Graz University of Technology",
+   "papers": 1,
+   "country": "AT",
+   "mine": false
+  },
+  {
+   "name": "Hainan University",
+   "papers": 1,
+   "country": "CN",
+   "mine": false
+  },
+  {
+   "name": "IIIT Delhi",
+   "papers": 1,
+   "country": "IN",
+   "mine": false
+  },
+  {
+   "name": "IIT Kharagpur",
+   "papers": 1,
+   "country": "IN",
+   "mine": false
+  },
+  {
+   "name": "IRISA / Université de Rennes",
+   "papers": 1,
+   "country": "FR",
+   "mine": false
+  },
+  {
+   "name": "Institute of Information Engineering, CAS",
+   "papers": 1,
+   "country": "CN",
+   "mine": false
+  },
+  {
+   "name": "Jinan University",
+   "papers": 1,
+   "country": "CN",
+   "mine": false
+  },
+  {
+   "name": "NEC Solution Innovators",
+   "papers": 1,
+   "country": "JP",
+   "mine": false
+  },
+  {
+   "name": "Nagoya University",
+   "papers": 1,
+   "country": "JP",
+   "mine": false
+  },
+  {
+   "name": "Presidency University",
+   "papers": 1,
+   "country": "IN",
+   "mine": false
+  },
+  {
+   "name": "Ruhr University Bochum",
+   "papers": 1,
+   "country": "DE",
+   "mine": false
+  },
+  {
+   "name": "Siksha O Anusandhan University",
+   "papers": 1,
+   "country": "IN",
+   "mine": false
+  },
+  {
+   "name": "Tokyo Institute of Technology",
+   "papers": 1,
+   "country": "JP",
+   "mine": false
+  },
+  {
+   "name": "University of Calcutta",
+   "papers": 1,
+   "country": "IN",
+   "mine": false
+  },
+  {
+   "name": "University of Chinese Academy of Sciences",
+   "papers": 1,
+   "country": "CN",
+   "mine": false
+  },
+  {
+   "name": "Yokohama National University",
+   "papers": 1,
+   "country": "JP",
+   "mine": false
   }
  ]
 }

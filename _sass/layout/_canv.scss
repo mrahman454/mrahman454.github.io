@@ -64,3 +64,47 @@ html.serious {
   .canv-frame__label { display: inline; font-family: "Source Serif 4", Georgia, serif; font-weight: 700; color: var(--ctp-text); font-size: 1.1em; }
   .coauthor-list__n { color: var(--ctp-subtext); }
 }
+
+/* Authors / Institutions toggle */
+.net-toggle {
+  display: inline-flex;
+  margin: 0.2em 0 1em;
+  padding: 3px;
+  border: 1px solid var(--ctp-surface1);
+  border-radius: 999px;
+  background: var(--ctp-mantle);
+}
+.net-toggle__btn {
+  font: inherit;
+  font-size: 0.85em;
+  padding: 0.35em 1.1em;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ctp-subtext);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  i { margin-right: 0.35em; }
+  &:hover { color: var(--ctp-text); }
+  &.is-active { background: var(--ctp-mauve); color: var(--ctp-base); font-weight: 600; }
+}
+.net-only[hidden] { display: none !important; }
+
+.coauthor-list__cc { font-size: 0.75em; color: var(--ctp-overlay); margin-left: 0.3em; }
+.coauthor-list__mine {
+  font-size: 0.7em;
+  margin-left: 0.4em;
+  padding: 0 0.5em;
+  border-radius: 999px;
+  border: 1px solid var(--ctp-red);
+  color: var(--ctp-red);
+  vertical-align: 0.1em;
+}
+.coauthor-list li.is-mine .coauthor-list__name { font-weight: 600; }
+
+html.serious {
+  .net-toggle { background: var(--ctp-mantle); border-color: var(--ctp-surface1); }
+  .net-toggle__btn { font-family: "Source Sans 3", sans-serif; }
+  .net-toggle__btn.is-active { background: var(--ctp-blue); color: #fff; }
+  .coauthor-list__mine { border-color: #b42318; color: #b42318; }
+}

@@ -25,20 +25,20 @@ jobs:
       - name: Look for new papers
         run: python3 scripts/update_publications.py
 
-      - name: Rebuild the co-authorship network
-        run: python3 scripts/build_coauthor_network.py
+      - name: Rebuild the co-author and institution networks
+        run: python3 scripts/build_coauthor_network.py --fetch
 
       - name: Commit and push if anything changed
         id: commit
         run: |
-          if [ -z "$(git status --porcelain -- _publications _data/news.yml _data/coauthors.json assets/canv)" ]; then
+          if [ -z "$(git status --porcelain -- _publications _data/news.yml _data/coauthors.json _data/affiliations.json assets/canv)" ]; then
             echo "No new publications."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add _publications _data/news.yml _data/coauthors.json assets/canv
+          git add _publications _data/news.yml _data/coauthors.json _data/affiliations.json assets/canv
           git commit -m "Add new publications (automatic update)"
           git push
           echo "changed=true" >> "$GITHUB_OUTPUT"

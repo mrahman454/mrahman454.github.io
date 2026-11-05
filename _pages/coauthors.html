@@ -9,47 +9,98 @@ permalink: /coauthors/
 
 <div class="acad">
 
-<p class="pub-stats">
+<div class="net-toggle" role="tablist" aria-label="Network type">
+  <button type="button" role="tab" class="net-toggle__btn is-active" data-net="authors" aria-selected="true"><i class="fas fa-user-group" aria-hidden="true"></i> Authors</button>
+  <button type="button" role="tab" class="net-toggle__btn" data-net="institutions" aria-selected="false"><i class="fas fa-building-columns" aria-hidden="true"></i> Institutions</button>
+</div>
+
+<p class="pub-stats net-only" data-net="authors">
   My co-authorship network: <strong>{{ ca.total }} co-authors</strong> across {{ ca.papers }} papers.
   Bigger, darker circles are more frequent collaborators. Hover over a circle to see the name, drag circles to rearrange the network, or search for a co-author.
+</p>
+<p class="pub-stats net-only" data-net="institutions" hidden>
+  The institutions behind my papers: <strong>{{ ca.institutions_total }} institutions</strong> across {{ ca.institutions_papers }} papers, linked when they appear on the same paper.
+  My own institutions are highlighted. Affiliations are taken from each paper's record in <a href="https://openalex.org/">OpenAlex</a>.
 </p>
 
 <div class="canv-frame">
   <div class="canv-frame__bar">
     <span class="tl-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span class="canv-frame__title">~/coauthors &mdash; canv</span>
-    <span class="canv-frame__label">Co-authorship network</span>
-    <a class="canv-frame__open" href="{{ base_path }}/assets/canv/coauthors.html" target="_blank" rel="noopener">open full screen &#8599;</a>
+    <span class="canv-frame__title" id="canv-title">~/coauthors &mdash; canv</span>
+    <span class="canv-frame__label" id="canv-label">Co-authorship network</span>
+    <a class="canv-frame__open" id="canv-open" href="{{ base_path }}/assets/canv/coauthors.html" target="_blank" rel="noopener">open full screen &#8599;</a>
   </div>
-  <iframe id="canv-frame" src="{{ base_path }}/assets/canv/coauthors.html?v={{ site.time | date: '%s' }}" title="Interactive co-authorship network of Mostafizar Rahman" loading="lazy"></iframe>
+  <iframe id="canv-frame" src="{{ base_path }}/assets/canv/coauthors.html?v={{ site.time | date: '%s' }}" title="Interactive network" loading="lazy"></iframe>
 </div>
 
 <p class="canv-credit">
   Made with <a href="https://github.com/Xovee/canv">CANV</a> by Xovee Xu, built on <a href="https://github.com/dblarremore/webweb">webweb</a> (both GPL-3.0).
-  The network is generated from the publication list on this site and updates automatically when new papers are added.
+  Both networks are generated from the publication list on this site and update automatically when new papers are added.
 </p>
 
+<div class="net-only" data-net="authors">
 <h2>Frequent collaborators</h2>
 <ul class="coauthor-list">
   {% for p in ca.people %}{% if p.papers > 1 %}
   <li><span class="coauthor-list__name">{{ p.name }}</span> <span class="coauthor-list__n">{{ p.papers }} papers</span></li>
   {% endif %}{% endfor %}
 </ul>
+</div>
+
+<div class="net-only" data-net="institutions" hidden>
+<h2>Institutions</h2>
+<ul class="coauthor-list">
+  {% for i in ca.institutions %}
+  <li{% if i.mine %} class="is-mine"{% endif %}><span class="coauthor-list__name">{{ i.name }}{% if i.country != "" %} <span class="coauthor-list__cc">{{ i.country }}</span>{% endif %}{% if i.mine %} <span class="coauthor-list__mine">mine</span>{% endif %}</span> <span class="coauthor-list__n">{{ i.papers }} paper{% if i.papers != 1 %}s{% endif %}</span></li>
+  {% endfor %}
+</ul>
+</div>
 
 </div>
 
 <script>
 (function () {
-  /* Grow the frame to fit the network once it has been drawn */
+  var base = '{{ base_path }}/assets/canv/';
+  var version = '{{ site.time | date: "%s" }}';
+  var NETS = {
+    authors: { file: 'coauthors.html', title: '~/coauthors — canv', label: 'Co-authorship network' },
+    institutions: { file: 'institutions.html', title: '~/institutions — canv', label: 'Institution network' }
+  };
   var f = document.getElementById('canv-frame');
   if (!f) return;
+
+  /* Grow the frame to fit the network once it has been drawn */
   function fit() {
     try {
       var d = f.contentDocument;
-      if (d && d.documentElement) { f.style.height = (d.documentElement.scrollHeight + 6) + 'px'; }
+      var c = d && (d.getElementById('webweb-visualization-container') || d.body);
+      if (c) { f.style.height = Math.ceil(c.getBoundingClientRect().bottom + 14) + 'px'; }
     } catch (e) {}
   }
   f.addEventListener('load', function () { fit(); setTimeout(fit, 500); setTimeout(fit, 1500); });
+
+  /* Authors / Institutions toggle */
+  var current = 'authors';
+  function show(net, push) {
+    if (!NETS[net]) net = 'authors';
+    var n = NETS[net];
+    document.querySelectorAll('.net-toggle__btn').forEach(function (b) {
+      var on = b.getAttribute('data-net') === net;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.net-only').forEach(function (el) { el.hidden = el.getAttribute('data-net') !== net; });
+    document.getElementById('canv-title').textContent = n.title;
+    document.getElementById('canv-label').textContent = n.label;
+    document.getElementById('canv-open').href = base + n.file;
+    if (net !== current) { f.src = base + n.file + '?v=' + version; current = net; }
+    if (push) { try { history.replaceState(null, '', net === 'authors' ? location.pathname : '#institutions'); } catch (e) {} }
+  }
+  document.querySelectorAll('.net-toggle__btn').forEach(function (b) {
+    b.addEventListener('click', function () { show(b.getAttribute('data-net'), true); });
+  });
+  if (location.hash === '#institutions') show('institutions', false);
+
   /* Redraw the network in the new colours when the serious/fun switch is used */
   document.addEventListener('modechange', function () {
     try { f.contentWindow.location.reload(); } catch (e) { f.src = f.src; }
